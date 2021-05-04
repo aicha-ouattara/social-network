@@ -1,0 +1,6 @@
+C'est ici que l'on communique avec la base de données
+on y trouvera les models de :
+	- Modele mère ( constantes de connexion, ouverture connexion, fonctions génériques (selectAll from ...))
+	- user	( ajout / suppression / update / connexion )
+	- post	( ajout / suppression / modif ... )
+	- choix	( nouveau / consulter)
