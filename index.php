@@ -1,5 +1,6 @@
 <?php
 include_once('_config.php');
+require 'model/dblink.php';
 
 MyAutoload::start();
 
