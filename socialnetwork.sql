@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 04 mai 2021 à 21:28
+-- Généré le : mer. 05 mai 2021 à 08:25
 -- Version du serveur :  8.0.21
 -- Version de PHP : 8.0.3
 
@@ -82,6 +82,23 @@ CREATE TABLE IF NOT EXISTS `comment_replies` (
   PRIMARY KEY (`id`),
   KEY `id_comment` (`id_comment`),
   KEY `comment_replies_ibfk_2` (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `com_reactions`
+--
+
+DROP TABLE IF EXISTS `com_reactions`;
+CREATE TABLE IF NOT EXISTS `com_reactions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_comment` int NOT NULL,
+  `id_user` int NOT NULL,
+  `choice` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_comment` (`id_comment`),
+  KEY `id_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -241,6 +258,10 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `id_hashtags` varchar(2250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `path` varchar(750) NOT NULL,
   `date` date NOT NULL,
+  `choice1` varchar(255) NOT NULL,
+  `count1` int NOT NULL DEFAULT '0',
+  `choice2` varchar(255) NOT NULL,
+  `count2` int NOT NULL DEFAULT '0',
   `views` int NOT NULL,
   `expdate` date DEFAULT NULL,
   `highlighted` tinyint(1) NOT NULL DEFAULT '0',
@@ -251,34 +272,15 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `react1`
+-- Structure de la table `post_reactions`
 --
 
-DROP TABLE IF EXISTS `react1`;
-CREATE TABLE IF NOT EXISTS `react1` (
+DROP TABLE IF EXISTS `post_reactions`;
+CREATE TABLE IF NOT EXISTS `post_reactions` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_post` int NOT NULL,
   `id_user` int NOT NULL,
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `counter` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_post` (`id_post`),
-  KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `react2`
---
-
-DROP TABLE IF EXISTS `react2`;
-CREATE TABLE IF NOT EXISTS `react2` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_post` int NOT NULL,
-  `id_user` int NOT NULL,
-  `content` varchar(255) NOT NULL,
-  `counter` int NOT NULL,
+  `choice` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_post` (`id_post`),
   KEY `id_user` (`id_user`)
@@ -305,35 +307,17 @@ CREATE TABLE IF NOT EXISTS `recovery` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `userinfos`
+-- Structure de la table `rep_reactions`
 --
 
-DROP TABLE IF EXISTS `userinfos`;
-CREATE TABLE IF NOT EXISTS `userinfos` (
+DROP TABLE IF EXISTS `rep_reactions`;
+CREATE TABLE IF NOT EXISTS `rep_reactions` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `country` varchar(255) NOT NULL,
-  `lastname` varchar(255) NOT NULL,
-  `firstname` varchar(255) NOT NULL,
-  `birthdate` date NOT NULL,
-  `registerdate` date NOT NULL,
-  `phone` varchar(55) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `userpreferences`
---
-
-DROP TABLE IF EXISTS `userpreferences`;
-CREATE TABLE IF NOT EXISTS `userpreferences` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id_reply` int NOT NULL,
   `id_user` int NOT NULL,
-  `id_hashtag` int NOT NULL,
-  `counter` int NOT NULL,
+  `choice` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_hashtag` (`id_hashtag`),
+  KEY `id_reply` (`id_reply`),
   KEY `id_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -357,6 +341,41 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `users_ibfk_1` (`id_mail`),
   KEY `users_ibfk_2` (`id_preferences`),
   KEY `users_ibfk_3` (`id_userinfos`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user_infos`
+--
+
+DROP TABLE IF EXISTS `user_infos`;
+CREATE TABLE IF NOT EXISTS `user_infos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `country` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `birthdate` date NOT NULL,
+  `registerdate` date NOT NULL,
+  `phone` varchar(55) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user_preferences`
+--
+
+DROP TABLE IF EXISTS `user_preferences`;
+CREATE TABLE IF NOT EXISTS `user_preferences` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_user` int NOT NULL,
+  `id_hashtag` int NOT NULL,
+  `counter` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_hashtag` (`id_hashtag`),
+  KEY `id_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -391,6 +410,13 @@ ALTER TABLE `comments`
 ALTER TABLE `comment_replies`
   ADD CONSTRAINT `comment_replies_ibfk_1` FOREIGN KEY (`id_comment`) REFERENCES `comments` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `comment_replies_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON UPDATE RESTRICT;
+
+--
+-- Contraintes pour la table `com_reactions`
+--
+ALTER TABLE `com_reactions`
+  ADD CONSTRAINT `com_reactions_ibfk_1` FOREIGN KEY (`id_comment`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `com_reactions_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `favorites`
@@ -444,18 +470,11 @@ ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`);
 
 --
--- Contraintes pour la table `react1`
+-- Contraintes pour la table `post_reactions`
 --
-ALTER TABLE `react1`
-  ADD CONSTRAINT `react1_ibfk_1` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `react1_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `react2`
---
-ALTER TABLE `react2`
-  ADD CONSTRAINT `react2_ibfk_1` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `react2_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `post_reactions`
+  ADD CONSTRAINT `post_reactions_ibfk_1` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `post_reactions_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `recovery`
@@ -464,19 +483,26 @@ ALTER TABLE `recovery`
   ADD CONSTRAINT `recovery_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `userpreferences`
+-- Contraintes pour la table `rep_reactions`
 --
-ALTER TABLE `userpreferences`
-  ADD CONSTRAINT `userpreferences_ibfk_1` FOREIGN KEY (`id_hashtag`) REFERENCES `hashtags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `userpreferences_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `rep_reactions`
+  ADD CONSTRAINT `rep_reactions_ibfk_1` FOREIGN KEY (`id_reply`) REFERENCES `comment_replies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rep_reactions_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_mail`) REFERENCES `mails` (`id`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`id_preferences`) REFERENCES `userpreferences` (`id`),
-  ADD CONSTRAINT `users_ibfk_3` FOREIGN KEY (`id_userinfos`) REFERENCES `userinfos` (`id`);
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`id_preferences`) REFERENCES `user_preferences` (`id`),
+  ADD CONSTRAINT `users_ibfk_3` FOREIGN KEY (`id_userinfos`) REFERENCES `user_infos` (`id`);
+
+--
+-- Contraintes pour la table `user_preferences`
+--
+ALTER TABLE `user_preferences`
+  ADD CONSTRAINT `user_preferences_ibfk_1` FOREIGN KEY (`id_hashtag`) REFERENCES `hashtags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_preferences_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `wallets`
