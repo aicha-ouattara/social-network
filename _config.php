@@ -25,6 +25,8 @@ class MyAutoload
 		define('MODEL', ROOT.'model/');
 		define('CLASSES', ROOT.'classes/');
 
+		define('UPLOADS', ROOT.'uploads');
+
 		define('URL', 'http://localhost/'.basename(getcwd()).'/');
 
 		define('ASSETS', 'http://localhost/'.basename(getcwd()).'/'.'assets/');

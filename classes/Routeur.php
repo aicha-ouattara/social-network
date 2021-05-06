@@ -10,6 +10,8 @@ class Routeur
 	private $controllers = [
 		"home"				=> 'Home',
 		"friends"			=> 'Friends',
+		"test"				=> 'Test',
+		"addPost"			=> 'AddPost',
 	];
 	private 	$controller;	// Controleur sélectionné
 
