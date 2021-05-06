@@ -37,6 +37,12 @@ class View
 		$this->footer = ob_get_clean();
 	}
 
+	public function getSession()
+	{
+		ob_start();
+		require VIEW . 'elements/session.php';
+	}
+
 
 
 	public function render()
@@ -44,6 +50,7 @@ class View
 		$this->getHTMLHead();
 		$this->getHTMLHeader();
 		$this->getHTMLFooter();
+		$this->getSession();
 		echo $this->head;
 		echo $this->header;
 		foreach ($this->main as $content){

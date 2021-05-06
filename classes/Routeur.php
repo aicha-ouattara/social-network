@@ -11,7 +11,8 @@ class Routeur
 		""					=> 'Home',
 		"home"				=> 'Home',
 		"register"			=> 'Register',
-		"register.php"		=> 'Register'
+		"connection"		=> 'Connect',
+		"connect" 			=> 'Connect'
 	];
 	private 	$controller;	// Controleur sélectionné
 

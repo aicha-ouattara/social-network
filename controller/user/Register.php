@@ -1,16 +1,13 @@
 <?php
 
-/**
- *
- */
-class Register extends View
-{
+class Register extends View{
+
 	private $pageTitle = "Inscription";
 
 	private $css = [];
 	private $js = [];
 
-	function __construct()
+	public function __construct()
 	{
 		if(isset($_POST['submit']) && $_POST['submit']){
 			$return='';
@@ -47,12 +44,12 @@ class Register extends View
 					break;
 			}
 		}
+		
+		else include './view/user/register.php';
 
 		$this->main[] = '';
-		include './view/user/register.php';
-		echo "test";
 		
-
+		
 		$this->render();
 	}
 }
