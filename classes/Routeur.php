@@ -8,8 +8,10 @@ class Routeur
 {
 	// Liste des pages et de leurs controllers
 	private $controllers = [
+		""					=> 'Home',
 		"home"				=> 'Home',
 		"register"			=> 'Register',
+		"register.php"		=> 'Register'
 	];
 	private 	$controller;	// Controleur sélectionné
 

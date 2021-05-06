@@ -11,10 +11,6 @@ class View
 	private $cssList = [];
 	private $jsList = [];
 
-
-
-
-
 	function __construct()
 	{
 
