@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 05 mai 2021 à 15:28
+-- Généré le : jeu. 06 mai 2021 à 08:25
 -- Version du serveur :  8.0.21
 -- Version de PHP : 8.0.3
 
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `login` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `login` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `admin` (
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `category` varchar(255) NOT NULL,
+  `category` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -59,12 +59,12 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_post` int NOT NULL,
   `id_user` int NOT NULL,
-  `content` varchar(750) NOT NULL,
+  `content` varchar(750) COLLATE utf8mb4_general_ci NOT NULL,
   `likes` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `comments_ibfk_1` (`id_post`),
   KEY `comments_ibfk_2` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -77,12 +77,12 @@ CREATE TABLE IF NOT EXISTS `comment_replies` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_comment` int NOT NULL,
   `id_user` int NOT NULL,
-  `content` varchar(750) NOT NULL,
+  `content` varchar(750) COLLATE utf8mb4_general_ci NOT NULL,
   `likes` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_comment` (`id_comment`),
   KEY `comment_replies_ibfk_2` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `com_reactions` (
   PRIMARY KEY (`id`),
   KEY `id_comment` (`id_comment`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `favorites` (
   PRIMARY KEY (`id`),
   KEY `id_post` (`id_post`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `follows` (
   PRIMARY KEY (`id`),
   KEY `id_followed` (`id_followed`),
   KEY `id_follower` (`id_follower`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -143,9 +143,9 @@ CREATE TABLE IF NOT EXISTS `follows` (
 DROP TABLE IF EXISTS `hashtags`;
 CREATE TABLE IF NOT EXISTS `hashtags` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `item2` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -173,11 +173,11 @@ DROP TABLE IF EXISTS `ips`;
 CREATE TABLE IF NOT EXISTS `ips` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_client` int NOT NULL,
-  `address` varchar(255) NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `id_client` (`id_client`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `ivs` (
   `bytes` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_mail` (`id_mail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -204,10 +204,10 @@ DROP TABLE IF EXISTS `keychain`;
 CREATE TABLE IF NOT EXISTS `keychain` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_mail` int NOT NULL,
-  `key` varchar(255) NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_mail` (`id_mail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -218,10 +218,10 @@ CREATE TABLE IF NOT EXISTS `keychain` (
 DROP TABLE IF EXISTS `mails`;
 CREATE TABLE IF NOT EXISTS `mails` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `address` varchar(255) NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -234,14 +234,14 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_userA` int NOT NULL,
   `id_userB` int NOT NULL,
-  `content` varchar(2250) NOT NULL,
+  `content` varchar(2250) COLLATE utf8mb4_general_ci NOT NULL,
   `date` date NOT NULL,
   `emoji` int NOT NULL,
-  `status` varchar(25) NOT NULL,
+  `status` varchar(25) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `messages_ibfk_1` (`id_userA`),
   KEY `id_userB` (`id_userB`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -255,19 +255,19 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `id_user` int NOT NULL,
   `id_replies` int NOT NULL,
   `id_category` int NOT NULL,
-  `id_hashtags` varchar(2250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `path` varchar(750) NOT NULL,
+  `id_hashtags` varchar(2250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `path` varchar(750) COLLATE utf8mb4_general_ci NOT NULL,
   `date` date NOT NULL,
-  `choice1` varchar(255) NOT NULL,
+  `choice1` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `count1` int NOT NULL DEFAULT '0',
-  `choice2` varchar(255) NOT NULL,
+  `choice2` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `count2` int NOT NULL DEFAULT '0',
   `views` int NOT NULL,
   `expdate` date DEFAULT NULL,
   `highlighted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `id_category` (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -283,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `post_hashtags` (
   PRIMARY KEY (`id`),
   KEY `id_post` (`id_post`),
   KEY `id_hashtag` (`id_hashtag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `post_reactions` (
   PRIMARY KEY (`id`),
   KEY `id_post` (`id_post`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -312,13 +312,13 @@ DROP TABLE IF EXISTS `recovery`;
 CREATE TABLE IF NOT EXISTS `recovery` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
-  `question1` varchar(1250) NOT NULL,
-  `answer1` varchar(500) NOT NULL,
-  `question2` varchar(1250) NOT NULL,
-  `answer2` varchar(500) NOT NULL,
+  `question1` varchar(1250) COLLATE utf8mb4_general_ci NOT NULL,
+  `answer1` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
+  `question2` varchar(1250) COLLATE utf8mb4_general_ci NOT NULL,
+  `answer2` varchar(500) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `rep_reactions` (
   PRIMARY KEY (`id`),
   KEY `id_reply` (`id_reply`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -350,17 +350,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id_userinfos` int NOT NULL,
   `id_preferences` int NOT NULL,
   `id_settings` int NOT NULL,
-  `login` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `authkey` varchar(255) NOT NULL,
-  `blacklist` varchar(1250) NOT NULL,
+  `login` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `authkey` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `blacklist` varchar(1250) COLLATE utf8mb4_general_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `users_ibfk_1` (`id_mail`),
   KEY `users_ibfk_2` (`id_preferences`),
   KEY `users_ibfk_3` (`id_userinfos`),
   KEY `id_settings` (`id_settings`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -377,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `user_hashtags` (
   PRIMARY KEY (`id`),
   KEY `id_hashtag` (`id_hashtag`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -388,14 +388,14 @@ CREATE TABLE IF NOT EXISTS `user_hashtags` (
 DROP TABLE IF EXISTS `user_infos`;
 CREATE TABLE IF NOT EXISTS `user_infos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `country` varchar(255) NOT NULL,
-  `lastname` varchar(255) NOT NULL,
-  `firstname` varchar(255) NOT NULL,
+  `country` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `birthdate` date NOT NULL,
   `registerdate` date NOT NULL,
-  `phone` varchar(55) NOT NULL,
+  `phone` varchar(55) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -406,10 +406,10 @@ CREATE TABLE IF NOT EXISTS `user_infos` (
 DROP TABLE IF EXISTS `user_settings`;
 CREATE TABLE IF NOT EXISTS `user_settings` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `background` varchar(255) NOT NULL,
+  `background` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `darkmode` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -424,7 +424,7 @@ CREATE TABLE IF NOT EXISTS `wallets` (
   `tokens` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Contraintes pour les tables déchargées

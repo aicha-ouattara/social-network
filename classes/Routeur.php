@@ -9,6 +9,7 @@ class Routeur
 	// Liste des pages et de leurs controllers
 	private $controllers = [
 		"home"				=> 'Home',
+		"register"			=> 'Register',
 	];
 	private 	$controller;	// Controleur sélectionné
 
