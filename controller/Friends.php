@@ -3,10 +3,10 @@
 /**
  *
  */
-class Home extends View
+class Friends extends View
 {
 	// Il faut donner le titre de la page
-	public $pageTitle = "Home";
+	public $pageTitle = "Friends";
 
 	// Il faut donner la liste des css et js à lier
 	private $css = [];
@@ -14,10 +14,7 @@ class Home extends View
 
 	function __construct()
 	{
-		// Il faut remplir la variable $main des différents contenus du main (d'où la liste)
-		// Cela va nous permettre de travailler par petits modules qu'on pourrait répéter ailleurs
-
-		$this->main[] = "Bienvenue sur la page Home!<br>";
+		$this->main[] = "Bienvenue sur la page Des amis!<br>";
 
 		ob_start();
 		include(VIEW.'elements/test.php');

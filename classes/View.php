@@ -7,7 +7,7 @@
 class View
 {
 	// Pour le HEAD
-	private $pageTitle = "Gabarit";
+	// private $pageTitle = "Gabarit";
 	private $cssList = [];
 	private $jsList = [];
 
