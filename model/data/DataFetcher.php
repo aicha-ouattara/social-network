@@ -13,17 +13,18 @@
                 WHERE u.login=? OR m.address=?');
             $stmt->execute([$login, $mail]);
             $result=$stmt->fetch(PDO::FETCH_ASSOC);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
         }
 
         public function getLoginInfos(string $login){
             $stmt = self::$db->prepare(
                 'SELECT u.id, u.password, u.active, i.address AS `ip` FROM users u 
                 INNER JOIN mails m ON u.id_mail=m.id 
-                INNER JOIN ips i ON i.id_client=u.id 
+                INNER JOIN ips i ON i.id_user=u.id 
                 WHERE u.login=? OR m.address=?');
             $stmt->execute([$login, $login]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $result=$stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
         }
 
         // public function getAllDatas(string $authtoken){

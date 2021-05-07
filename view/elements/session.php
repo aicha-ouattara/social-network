@@ -19,6 +19,7 @@
                  */
                 // $user = new DataFetcher();
                 // $user = $user->getAllDatas($_COOKIE['authtoken']);
+                // $user = new User(['authkey' => $_COOKIE['authtoken']]);
                 break;
             case 'invalidtoken':
             default:

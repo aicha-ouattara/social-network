@@ -27,7 +27,7 @@
 
         public function subscribe(){
             $db = new DataFetcher();
-            if(!$db->userExists($this->login, $this->mail)){
+            if($db->userExists($this->login, $this->mail)==false){
                 $array=['login' => $this->login, 'password' => $this->password, 'mail' => $this->mail];
                 $user = new DataSender();
                 try{
@@ -36,7 +36,7 @@
                 }catch(Exception $e){
                     return $return=$e;
                 }
-            }
+            } else return $return='user_exists';
         }
 
         public function verifyPwd(string $password){

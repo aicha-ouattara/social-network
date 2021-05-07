@@ -34,6 +34,9 @@ class Register extends View{
 						case 'success':
 							echo "L'inscription a bien été enregistrée.";
 							break;
+						case 'user_exists':
+							echo "L'adresse mail ou le nom d'utilisateur est déjà utilisé.";
+							break;
 						default:
 							echo "Une erreur est survenue dans le traitement de vos données.";
 							break;

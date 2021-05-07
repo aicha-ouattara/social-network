@@ -11,7 +11,7 @@
         public function authenticate(){
             $stmt = self::$db->prepare(
                 'SELECT i.address AS `ip` FROM ips i
-                INNER JOIN users u ON i.id_client=u.id 
+                INNER JOIN users u ON i.id_user=u.id 
                 WHERE u.authkey = ?'
             );
             $stmt->execute([$this->authtoken]);

@@ -14,7 +14,7 @@
 
         public function connect(){
             $user = (new DataFetcher())->getLoginInfos($this->login);
-            if(password_verify($this->password, $user['password'])){
+            if(isset($user) && $user && password_verify($this->password, $user['password'])){
                 if($this->ip==$user['ip']){
                     if($user['active']==1){
                         $authtoken = self::create_token();

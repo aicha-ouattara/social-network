@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 06 mai 2021 à 08:25
+-- Généré le : ven. 07 mai 2021 à 07:11
 -- Version du serveur :  8.0.21
 -- Version de PHP : 8.0.3
 
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `item1` int NOT NULL,
   `item2` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`)
+  KEY `inventory_ibfk_1` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -172,11 +172,11 @@ CREATE TABLE IF NOT EXISTS `inventory` (
 DROP TABLE IF EXISTS `ips`;
 CREATE TABLE IF NOT EXISTS `ips` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_client` int NOT NULL,
+  `id_user` int NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `id_client` (`id_client`)
+  KEY `id_client` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `highlighted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `id_category` (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -347,9 +347,9 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_mail` int NOT NULL,
-  `id_userinfos` int NOT NULL,
-  `id_preferences` int NOT NULL,
-  `id_settings` int NOT NULL,
+  `id_userinfos` int DEFAULT NULL,
+  `id_preferences` int DEFAULT NULL,
+  `id_settings` int DEFAULT NULL,
   `login` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `authkey` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
@@ -423,7 +423,7 @@ CREATE TABLE IF NOT EXISTS `wallets` (
   `id_user` int NOT NULL,
   `tokens` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`)
+  KEY `wallets_ibfk_1` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -469,13 +469,13 @@ ALTER TABLE `follows`
 -- Contraintes pour la table `inventory`
 --
 ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `ips`
 --
 ALTER TABLE `ips`
-  ADD CONSTRAINT `ips_ibfk_1` FOREIGN KEY (`id_client`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `ips_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `ivs`
@@ -549,7 +549,7 @@ ALTER TABLE `user_hashtags`
 -- Contraintes pour la table `wallets`
 --
 ALTER TABLE `wallets`
-  ADD CONSTRAINT `wallets_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `wallets_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
