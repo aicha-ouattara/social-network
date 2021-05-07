@@ -11,13 +11,15 @@ class Connect extends View{
 	{
 		if(isset($_POST['submit']) && $_POST['submit']){
             $return = '';
-            $conn = new Connection($_POST, $return);
+            if(count($_POST)!==3) $return='invalid_form';
+            else $user = new User($_POST, $return);
+
             switch($return){
                 case 'invalid_form':
                     echo "Une erreur est survenue dans le traitement de vos données.";
 					break;
                 case 'allgood':
-                    switch($conn->connect()){
+                    switch($user->connect()){
                         case 'connected':
                             echo "Vous êtes maintenant connecté.";
                             break;

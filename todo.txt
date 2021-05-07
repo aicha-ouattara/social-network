@@ -1,0 +1,3 @@
+keep connected status on each page
+set an array with needed infos on user
+create profile

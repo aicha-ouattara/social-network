@@ -12,7 +12,7 @@
             $stmt = self::$db->prepare(
                 'SELECT i.address AS `ip` FROM ips i
                 INNER JOIN users u ON i.id_user=u.id 
-                WHERE u.authkey = ?'
+                WHERE u.authtoken = ?'
             );
             $stmt->execute([$this->authtoken]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
