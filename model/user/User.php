@@ -6,8 +6,12 @@
         private $password=null;
         private $authtoken=null;
         private $mail=null;
+        private $id_mail=null;
+        private $id_settings=null;
+        private $id_preferences=null;
+        private $id_userinfos=null;
         
-        public function __construct(array $data = NULL, &$return){
+        public function __construct(array $data = NULL, &$return = NULL){
             parent::__construct();
             foreach($data as $key => $value){
                 if($key=='login' || $key=='password' || $key=='mail' || $key=='authtoken' || $key=='id')
@@ -126,6 +130,21 @@
                 }
                 else return 'bad_ip';
             }
+        }
+
+        public function getProfile(){
+            $stmt = parent::$db->prepare(
+                'SELECT u.id as `id`, u.login as `login`, u.id_mail as `id_mail`, m.address as `mail`, 
+                u.id_userinfos as `id_userinfos`, u.id_preferences as `id_preferences`, u.id_settings as `id_settings` 
+                FROM users u INNER JOIN mails m ON u.id_mail=m.id 
+                WHERE u.authtoken=?'
+            );
+            $stmt->execute([$this->authtoken]);
+            $results = $stmt->fetch(PDO::FETCH_ASSOC);
+            foreach($results as $key=>$value){
+                $this->$key = $value;
+            }
+            return $this;
         }
 
     }

@@ -17,9 +17,9 @@
                 /**
                  * Create user with all its data ( in session ? )
                  */
-                // $user = new DataFetcher();
-                // $user = $user->getAllDatas($_COOKIE['authtoken']);
-                // $user = new User(['authkey' => $_COOKIE['authtoken']]);
+                $user = new User(['authtoken' => $_COOKIE['authtoken']]);
+                $authorize=1;
+                $user = $user->getProfile();
                 break;
             case 'invalidtoken':
             default:

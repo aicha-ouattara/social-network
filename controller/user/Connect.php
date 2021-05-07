@@ -1,5 +1,7 @@
 <?php
 
+require VIEW . 'elements/session.php';
+
 class Connect extends View{
     
     private $pageTitle = "Connexion";
