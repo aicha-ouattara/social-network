@@ -3,7 +3,7 @@
     class Session extends Database{
 
         public function __construct($authtoken = NULL){
-            self::$db = (new DataFetcher())->getDB();
+            parent::__construct();
             $this->authtoken = $authtoken;
             $this->ip = $_SERVER['REMOTE_ADDR'];
         }
