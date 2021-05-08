@@ -1,7 +1,5 @@
 <?php
 
-require VIEW . 'elements/session.php';
-
 class Connect extends View{
     
     private $pageTitle = "Connexion";
@@ -11,7 +9,17 @@ class Connect extends View{
 
     public function __construct()
 	{
-		if(isset($_POST['submit']) && $_POST['submit']){
+        require VIEW . 'elements/session.php';
+
+        /**
+         * Replace all echos with specifics views
+         */
+
+        if(isset($authorize) && $authorize==1){
+            echo "Vous êtes déjà connecté.";
+        }
+
+		else if(isset($_POST['submit']) && $_POST['submit']){
             $return = '';
             if(count($_POST)!==3) $return='invalid_form';
             else $user = new User($_POST, $return);

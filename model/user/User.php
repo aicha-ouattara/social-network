@@ -10,6 +10,8 @@
         private $id_settings=null;
         private $id_preferences=null;
         private $id_userinfos=null;
+        private $followers=null;
+        private $followings=null;
         
         public function __construct(array $data = NULL, &$return = NULL){
             parent::__construct();
@@ -134,9 +136,12 @@
 
         public function getProfile(){
             $stmt = parent::$db->prepare(
-                'SELECT u.id as `id`, u.login as `login`, u.id_mail as `id_mail`, m.address as `mail`, 
-                u.id_userinfos as `id_userinfos`, u.id_preferences as `id_preferences`, u.id_settings as `id_settings` 
-                FROM users u INNER JOIN mails m ON u.id_mail=m.id 
+                'SELECT u.id as `id`, u.login as `login`, u.id_mail as `id_mail`, u.id_settings as `id_settings`,
+                u.id_userinfos as `id_userinfos`, u.id_preferences as `id_preferences`, m.address as `mail`, 
+                w.id as `id_wallet`, w.tokens as `tokens`
+                FROM users u 
+                INNER JOIN mails m ON u.id_mail=m.id 
+                INNER JOIN wallets w ON w.id_user=u.id 
                 WHERE u.authtoken=?'
             );
             $stmt->execute([$this->authtoken]);
@@ -144,7 +149,33 @@
             foreach($results as $key=>$value){
                 $this->$key = $value;
             }
+            self::getFollowers();
+            self::getFollowings();
             return $this;
+        }
+
+        public function getHis(string $item){
+            return $this->$item;
+        }
+
+        public function getFollowers(int $id = NULL){
+            $stmt = parent::$db->prepare(
+                "SELECT COUNT('id_following') as `followers` FROM `follows` 
+                WHERE `id_followed`=?"
+            );
+            $id!== NULL ? $stmt->execute([$id]) : $stmt->execute([$this->id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->followers = $result['followers'];
+        }
+
+        public function getFollowings(int $id = NULL){
+            $stmt = parent::$db->prepare(
+                "SELECT COUNT('id_followers') as `followings` FROM `follows` 
+                WHERE `id_following`=?"
+            );
+            $id!== NULL ? $stmt->execute([$id]) : $stmt->execute([$this->id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->followings = $result['followings'];
         }
 
     }

@@ -1,5 +1,4 @@
 <?php
-
     $cookie_options = array(
         'expires' => time() + 36000,
         'path' => '/',

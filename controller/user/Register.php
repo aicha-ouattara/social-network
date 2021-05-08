@@ -9,7 +9,17 @@ class Register extends View{
 
 	public function __construct()
 	{
-		if(isset($_POST['submit']) && $_POST['submit']){
+		require VIEW . 'elements/session.php';
+
+		/**
+         * Replace all echos with specifics views
+         */
+		
+		if(isset($authorize) && $authorize==1){
+            echo "Vous êtes déjà inscrit.";
+        }
+
+		else if(isset($_POST['submit']) && $_POST['submit']){
 			$return='';
 
 			/**
