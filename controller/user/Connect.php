@@ -2,7 +2,7 @@
 
 class Connect extends View{
     
-    private $pageTitle = "Connexion";
+    protected $pageTitle = "Connexion";
 
     private $css = [];
     private $js = [];

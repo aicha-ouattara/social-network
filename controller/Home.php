@@ -6,7 +6,7 @@
 class Home extends View
 {
 	// Il faut donner le titre de la page
-	private $pageTitle = "Home";
+	protected $pageTitle = "Home";
 
 	// Il faut donner la liste des css et js à lier
 	private $css = [];

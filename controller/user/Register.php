@@ -2,8 +2,7 @@
 
 class Register extends View{
 
-	private $pageTitle = "Inscription";
-
+	protected $pageTitle = "Inscription";
 	private $css = [];
 	private $js = [];
 

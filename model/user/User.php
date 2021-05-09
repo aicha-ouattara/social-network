@@ -154,6 +154,24 @@
             return $this;
         }
 
+        public function getPublicProfile(&$return){
+            $stmt = parent::$db->prepare(
+                'SELECT u.id as `id`
+                FROM users u 
+                WHERE u.login=?'
+            );
+            $stmt->execute([$this->login]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(empty($result)) return $return = 'no_user';
+            else{ 
+                $this->id = $result['id'];
+                self::getFollowers();
+                self::getFollowings();
+                $return = 'user_found';
+                return $this;
+            }
+        }
+
         public function getHis(string $item){
             return $this->$item;
         }
@@ -176,6 +194,10 @@
             $id!== NULL ? $stmt->execute([$id]) : $stmt->execute([$this->id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->followings = $result['followings'];
+        }
+
+        public function isFollowing(int $id_user1, int $id_user2){
+            // todo
         }
 
     }

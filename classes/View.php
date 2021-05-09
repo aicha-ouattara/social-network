@@ -7,7 +7,7 @@
 class View
 {
 	// Pour le HEAD
-	private $pageTitle = "Gabarit";
+	protected $pageTitle;
 	private $cssList = [];
 	private $jsList = [];
 
@@ -50,7 +50,7 @@ class View
 		$this->getHTMLHead();
 		$this->getHTMLHeader();
 		$this->getHTMLFooter();
-		$this->getSession();
+		// $this->getSession();
 		echo $this->head;
 		echo $this->header;
 		foreach ($this->main as $content){
