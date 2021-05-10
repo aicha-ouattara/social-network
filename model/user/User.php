@@ -196,8 +196,32 @@
             $this->followings = $result['followings'];
         }
 
-        public function isFollowing(int $id_user1, int $id_user2){
-            // todo
+        public function isFollowing(int $id_user2){
+            $stmt = parent::$db->prepare(
+                'SELECT f.id FROM follows f 
+                INNER JOIN users u ON u.id=f.id_following 
+                WHERE f.id_following = ? AND f.id_followed = ?'
+            );
+            $stmt->execute([$this->id, $id_user2]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return 0;
+            }
+            else return 1;
+        }
+
+        public function follow(int $id_user2){
+            $stmt = parent::$db->prepare(
+                'INSERT INTO follows (id_following, id_followed, date) 
+                VALUES (?,?, DATE(NOW()) )');
+            $stmt->execute([$this->id, $id_user2]);
+        }
+
+        public function unfollow(int $id_user2){
+            $stmt = parent::$db->prepare(
+                'DELETE FROM follows 
+                WHERE id_followed = ? AND id_following = ?');
+            $stmt->execute([$id_user2, $this->id]);
         }
 
     }
