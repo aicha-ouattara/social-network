@@ -13,12 +13,9 @@
         switch($session->authenticate($_COOKIE['authtoken'])){
             case 'validtoken':
                 setcookie('authtoken', $_COOKIE['authtoken'], $cookie_options);
-                /**
-                 * Create user with all its data ( in session ? )
-                 */
                 $user = new User(['authtoken' => $_COOKIE['authtoken']]);
-                $authorize=1;
                 $user = $user->getProfile();
+                $authorize=1;
                 break;
             case 'invalidtoken':
             default:

@@ -30,7 +30,7 @@ class Profile extends View{
                         break;
                     case 'user_found':
                         ob_start();
-                        include VIEW . 'user/visit_user.php';
+                        include VIEW . 'user/visit_profile.php';
                         $this->main[] = ob_get_clean();
                         break;
                     default:

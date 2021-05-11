@@ -1,3 +1,8 @@
-keep connected status on each page
-set an array with needed infos on user
-create profile
+x keep connected status on each page
+x set an array with needed infos on user
+x create profile
+
+photo de profil
+informations personnelles
+modifier le mot de passe
+modifier l'adresse mail

@@ -31,12 +31,10 @@
                     user1 : userid, 
                     user2 : followid
                 }, function(data){
-                    data = JSON.parse(data)
-                    if(data['return']==0){
-                        data['followers'] == null ? followers = 0 : followers = data['followers']
+                    if(data==0){
                         $('#un-fo_button').html('<button id="follow_button">S\'abonner</button> <i class="fas fa-check"></i> Désabonné')
-                        $('#div_followers').html("Followers : " + followers)
-                        // $("#div_followers").load(window.location.href + " #div_followers")
+                        // $('#div_followers').html("Followers : " + followers)
+                        $("#div_followers").load(window.location.href + " #div_followers")
                     }
                 })
             }
