@@ -12,6 +12,26 @@
         private $id_userinfos=null;
         private $followers=null;
         private $followings=null;
+
+        /**
+         * Available functions :
+         *  getHis(attribute) : get any existing attribute from an user
+         *  subscribe() : subscribe an user
+         *  connect() : connect an user
+         *  exists() : check if a mail or a login exists
+         *  createToken() : generate an authtoken
+         *  sendToken(token) : update authtoken 
+         *  createSettings() : generate settings for an user 
+         *  getSettings() : get every data from table `user_settings`
+         *  getRealIp() : get the actual ip related to an user
+         *  getRealPwd() : get the actual password related to an user
+         *  getRealStatus : get the actual status of an user ( active / inactive )
+         *  getProfile() : get every data from table `users` 
+         *  getPublicProfile() : get every data needed to show to a visitor
+         *  getFollowers() / getFollowings() : get an user's followers / followings
+         *  isFollowing(id) : check if the user is following another user by hid id
+         *  follow(id) / unfollow(id) : make the user follow / unfollow another user by his id
+         */
         
         public function __construct(array $data = NULL, &$return = NULL){
             parent::__construct();
@@ -34,11 +54,6 @@
             return $result;
         }
 
-        private function sendToken($token){
-            $stmt=self::$db->prepare("UPDATE `users` SET `authtoken`=? WHERE `login`=?");
-            $stmt->execute([$token, $this->login]);
-        }
-
         private function createToken(){
             $date = (new DateTime())->getTimeStamp();
             $ip=$_SERVER['REMOTE_ADDR'];
@@ -51,6 +66,11 @@
             return $hash;
         }
 
+        private function sendToken($token){
+            $stmt=self::$db->prepare("UPDATE `users` SET `authtoken`=? WHERE `login`=?");
+            $stmt->execute([$token, $this->login]);
+        }
+
         public function createSettings(){
             $stmt = self::$db->prepare(
                 "BEGIN;
@@ -59,6 +79,7 @@
                 COMMIT;"
             );
             $stmt->execute([$this->login]);
+            $stmt->closeCursor();
             $this->getProfile();
         }
 
@@ -103,11 +124,12 @@
                     $stmt = parent::$db->prepare(
                         "BEGIN;
                         INSERT INTO mails (address) VALUES(?);
-                        SELECT @last_id := LAST_INSERT_ID();
-                        INSERT INTO users (id_mail, login, password, active) VALUES(@last_id, ?, ?, 0);
-                        INSERT INTO ips (id_user, address) VALUES(@last_id, ?);
-                        INSERT INTO inventory (id_user) VALUES(@last_id); 
-                        INSERT INTO wallets(id_user, tokens) VALUES(@last_id, 500);
+                        SELECT @mail_id := LAST_INSERT_ID();
+                        INSERT INTO users (id_mail, login, password, active) VALUES(@mail_id, ?, ?, 0);
+                        SELECT @user_id := LAST_INSERT_ID();
+                        INSERT INTO ips (id_user, address) VALUES(@user_id, ?);
+                        INSERT INTO inventory (id_user) VALUES(@user_id); 
+                        INSERT INTO wallets(id_user, tokens) VALUES(@user_id, 500);
                         COMMIT;"
                     );
                     $stmt->execute([$this->mail, $this->login, password_hash($this->password, PASSWORD_DEFAULT), $ip]);
@@ -177,6 +199,7 @@
             foreach($results as $key=>$value){
                 $this->$key = $value;
             }
+            $stmt->closeCursor();
             return $this;
         }
 
@@ -248,6 +271,16 @@
                 'DELETE FROM follows 
                 WHERE id_followed = ? AND id_following = ?');
             $stmt->execute([$id_user2, $this->id]);
+        }
+
+        public function setProfilePicture(string $path){
+            $stmt = parent::$db->prepare(
+                'UPDATE user_settings AS s 
+                INNER JOIN users AS u ON u.id_settings = s.id 
+                SET s.picture = ? 
+                WHERE u.login = ?'
+            );
+            $stmt->execute([$path, $this->login]);
         }
 
     }
