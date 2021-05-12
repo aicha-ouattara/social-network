@@ -13,9 +13,10 @@ class Routeur
 		"register"			=> 'Register',
 		"connection"		=> 'Connect',
 		"connect" 			=> 'Connect',
-		"profil"			=> 'Profile'
+		"profil"			=> 'Profile',
+		"settings"			=> 'Settings'
 	];
-	private 	$controller;	// Controleur sélectionné
+	private $controller;	// Controleur sélectionné
 
 
 	public function __construct()

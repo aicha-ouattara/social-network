@@ -51,6 +51,17 @@
             return $hash;
         }
 
+        public function createSettings(){
+            $stmt = self::$db->prepare(
+                "BEGIN;
+                INSERT INTO user_settings (picture, background) VALUES (0,0);
+                UPDATE users SET id_settings = LAST_INSERT_ID() WHERE login = ?;
+                COMMIT;"
+            );
+            $stmt->execute([$this->login]);
+            $this->getProfile();
+        }
+
         private function getRealIP(){
             $stmt = self::$db->prepare(
                 'SELECT i.address as `ip` FROM ips i 
@@ -96,7 +107,7 @@
                         INSERT INTO users (id_mail, login, password, active) VALUES(@last_id, ?, ?, 0);
                         INSERT INTO ips (id_user, address) VALUES(@last_id, ?);
                         INSERT INTO inventory (id_user) VALUES(@last_id); 
-                        INSERT INTO wallets(id_user, tokens) VALUES(@last_id, 500); 
+                        INSERT INTO wallets(id_user, tokens) VALUES(@last_id, 500);
                         COMMIT;"
                     );
                     $stmt->execute([$this->mail, $this->login, password_hash($this->password, PASSWORD_DEFAULT), $ip]);
@@ -141,7 +152,7 @@
                 w.id as `id_wallet`, w.tokens as `tokens`
                 FROM users u 
                 INNER JOIN mails m ON u.id_mail=m.id 
-                INNER JOIN wallets w ON w.id_user=u.id 
+                INNER JOIN wallets w ON u.id=w.id_user 
                 WHERE u.authtoken=?'
             );
             $stmt->execute([$this->authtoken]);
@@ -151,6 +162,21 @@
             }
             self::getFollowers();
             self::getFollowings();
+            $this->id_settings!==NULL ? self::getSettings() : null;
+            return $this;
+        }
+
+        public function getSettings(){
+            $stmt = parent::$db->prepare(
+                'SELECT s.picture, s.background FROM user_settings s 
+                INNER JOIN users u ON u.id_settings = s.id 
+                WHERE u.id = ?'
+            );
+            $stmt->execute([$this->id]);
+            $results = $stmt->fetch(PDO::FETCH_ASSOC);
+            foreach($results as $key=>$value){
+                $this->$key = $value;
+            }
             return $this;
         }
 

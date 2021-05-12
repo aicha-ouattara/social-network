@@ -6,3 +6,4 @@ photo de profil
 informations personnelles
 modifier le mot de passe
 modifier l'adresse mail
+messagerie
