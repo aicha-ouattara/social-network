@@ -7,7 +7,7 @@
         </form>
     <?php } 
     else{ ?>
-        <img src ="<?= ROOT . $user->getHis('picture');?>" style="width:250px;">
+        <img src ="<?= ROOT . $user->getHis('picture');?>" style="width:250px;" alt="profile_picture">
     <?php }?>
     <?php if($user->getHis('background')==0){
         echo "no background";

@@ -6,7 +6,6 @@
  */
 class View
 {
-	// Pour le HEAD
 	protected $pageTitle;
 	private $cssList = [];
 	private $jsList = [];

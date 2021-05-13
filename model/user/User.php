@@ -9,9 +9,10 @@
         private $id_mail=null;
         private $id_settings=null;
         private $id_preferences=null;
-        private $id_userinfos=null;
+        private $id_informations=null;
         private $followers=null;
         private $followings=null;
+        private $picture=null;
 
         /**
          * Available functions :
@@ -41,6 +42,10 @@
                 elseif($key=='submit' || $key=='cpassword') null;
                 else return $return='invalid_field';
             }
+            if(filter_var($this->login, FILTER_VALIDATE_EMAIL) && $this->mail == NULL){
+                $this->mail = $this->login; 
+                $this->login = NULL;
+            } 
             return $return='allgood';
         }
 
@@ -67,8 +72,13 @@
         }
 
         private function sendToken($token){
-            $stmt=self::$db->prepare("UPDATE `users` SET `authtoken`=? WHERE `login`=?");
-            $stmt->execute([$token, $this->login]);
+            $stmt=self::$db->prepare(
+                "UPDATE users u 
+                INNER JOIN mails m 
+                ON u.id_mail = m.id 
+                SET u.authtoken=? 
+                WHERE u.login = ? OR m.address = ?");
+            $stmt->execute([$token, $this->login, $this->mail]);
         }
 
         public function createSettings(){
@@ -125,7 +135,9 @@
                         "BEGIN;
                         INSERT INTO mails (address) VALUES(?);
                         SELECT @mail_id := LAST_INSERT_ID();
-                        INSERT INTO users (id_mail, login, password, active) VALUES(@mail_id, ?, ?, 0);
+                        INSERT INTO user_informations (registerdate) VALUES (DATE(NOW()));
+                        SELECT @informations_id := LAST_INSERT_ID();
+                        INSERT INTO users (id_mail, id_informations, login, password, active) VALUES(@mail_id, @informations_id, ?, ?, 0);
                         SELECT @user_id := LAST_INSERT_ID();
                         INSERT INTO ips (id_user, address) VALUES(@user_id, ?);
                         INSERT INTO inventory (id_user) VALUES(@user_id); 
@@ -170,7 +182,7 @@
         public function getProfile(){
             $stmt = parent::$db->prepare(
                 'SELECT u.id as `id`, u.login as `login`, u.id_mail as `id_mail`, u.id_settings as `id_settings`,
-                u.id_userinfos as `id_userinfos`, u.id_preferences as `id_preferences`, m.address as `mail`, 
+                u.id_informations as `id_informations`, u.id_preferences as `id_preferences`, m.address as `mail`, 
                 w.id as `id_wallet`, w.tokens as `tokens`
                 FROM users u 
                 INNER JOIN mails m ON u.id_mail=m.id 
@@ -185,6 +197,7 @@
             self::getFollowers();
             self::getFollowings();
             $this->id_settings!==NULL ? self::getSettings() : null;
+            $this->id_informations!==NULL ? self::getInformations() : null;
             return $this;
         }
 
@@ -192,6 +205,22 @@
             $stmt = parent::$db->prepare(
                 'SELECT s.picture, s.background FROM user_settings s 
                 INNER JOIN users u ON u.id_settings = s.id 
+                WHERE u.id = ?'
+            );
+            $stmt->execute([$this->id]);
+            $results = $stmt->fetch(PDO::FETCH_ASSOC);
+            foreach($results as $key=>$value){
+                $this->$key = $value;
+            }
+            $stmt->closeCursor();
+            return $this;
+        }
+
+        public function getInformations(){
+            $stmt = parent::$db->prepare(
+                'SELECT i.bio, i.country, i.city, i.lastname, i.firstname, i.birthdate, i.registerdate, i.phone 
+                FROM user_informations i 
+                INNER JOIN users u ON u.id_informations = i.id 
                 WHERE u.id = ?'
             );
             $stmt->execute([$this->id]);
@@ -283,4 +312,31 @@
             $stmt->execute([$path, $this->login]);
         }
 
+        public function updateInformations(array $data = NULL){
+            foreach($data as $key=>$value){
+                $this->$key = $value;
+                self::updateHis($key, $value);
+            }
+        }
+
+        protected function updateHis(string $key, $value){
+            if($key!=='mail'){
+                $column = 'i.' . $key;
+                $stmt = parent::$db->prepare(
+                    "UPDATE user_informations AS i 
+                    INNER JOIN users AS u ON u.id_informations = i.id 
+                    SET $column = ? 
+                    WHERE u.id = ?"
+                );
+            }
+            else{
+                $stmt = parent::$db->prepare(
+                    "UPDATE mails AS m 
+                    INNER JOIN users AS u ON u.id_mail = m.id 
+                    SET m.address = ? 
+                    WHERE u.id = ?"
+                );
+            }
+            $stmt->execute([$value, $this->id]);
+        }
     }

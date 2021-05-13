@@ -2,7 +2,8 @@ x keep connected status on each page
 x set an array with needed infos on user
 x create profile
 
-photo de profil
+x photo de profil
+-> afficher les images ?
 informations personnelles
 modifier le mot de passe
 modifier l'adresse mail

@@ -14,7 +14,8 @@ class Routeur
 		"connection"		=> 'Connect',
 		"connect" 			=> 'Connect',
 		"profil"			=> 'Profile',
-		"settings"			=> 'Settings'
+		"settings"			=> 'Settings',
+		"informations"		=> 'Informations'
 	];
 	private $controller;	// Controleur sélectionné
 
