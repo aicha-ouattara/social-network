@@ -4,8 +4,6 @@
     <form method="post" action="informations" style="display:flex;flex-flow:column;">
         <label for="bio">Bio :</label>
         <textarea name="bio" rows="5" cols="40" placeholder="Je m'appelle John, j'ai 28 ans et j'habite à Bordeaux..."><?php echo !in_array($user->getHis('bio'), [0, null, '']) ? $user->getHis('bio') : null ?></textarea>
-        <label for="mail">Mail :</label>
-        <input type="email" name="mail" value="<?=$user->getHis('mail');?>" minlength="5" maxlength="40" required>
         <label for="country">Pays :</label>
         <select name="country">
             <option value=""></option>

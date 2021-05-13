@@ -16,12 +16,12 @@
 
         /**
          * Available functions :
-         *  getHis(attribute) : get any existing attribute from an user
+         *  getHis($attribute) : get any existing attribute from an user
          *  subscribe() : subscribe an user
          *  connect() : connect an user
          *  exists() : check if a mail or a login exists
          *  createToken() : generate an authtoken
-         *  sendToken(token) : update authtoken 
+         *  sendToken($token) : update authtoken 
          *  createSettings() : generate settings for an user 
          *  getSettings() : get every data from table `user_settings`
          *  getRealIp() : get the actual ip related to an user
@@ -32,6 +32,10 @@
          *  getFollowers() / getFollowings() : get an user's followers / followings
          *  isFollowing(id) : check if the user is following another user by hid id
          *  follow(id) / unfollow(id) : make the user follow / unfollow another user by his id
+         *  setProfilePicture($path) / setProfileBackground($path) : update db with img's path
+         *  setNewPassword($pwd) : update user's password
+         *  updateInformations($informations[]) : update user's informations
+         *  updateMail($mail) : verify if the new mail already exists and update it
          */
         
         public function __construct(array $data = NULL, &$return = NULL){
@@ -312,6 +316,23 @@
             $stmt->execute([$path, $this->login]);
         }
 
+        public function setProfileBackground(string $path){
+            $stmt = parent::$db->prepare(
+                'UPDATE user_settings AS s 
+                INNER JOIN users AS u ON u.id_settings = s.id 
+                SET s.background = ? 
+                WHERE u.login = ?'
+            );
+            $stmt->execute([$path, $this->login]);
+        }
+
+        public function setNewPassword(string $password){
+            $stmt = parent::$db->prepare(
+                'UPDATE users SET `password` = ? WHERE `id` = ?'
+            );
+            $stmt->execute([password_hash($password, PASSWORD_DEFAULT), $this->id]);
+        }
+
         public function updateInformations(array $data = NULL){
             foreach($data as $key=>$value){
                 $this->$key = $value;
@@ -320,23 +341,37 @@
         }
 
         protected function updateHis(string $key, $value){
-            if($key!=='mail'){
-                $column = 'i.' . $key;
+            $column = 'i.' . $key;
+            $stmt = parent::$db->prepare(
+                "UPDATE user_informations AS i 
+                INNER JOIN users AS u ON u.id_informations = i.id 
+                SET $column = ? 
+                WHERE u.id = ?"
+            );
+            $stmt->execute([$value, $this->id]);
+        }
+
+        public function updateMail($new_mail){
+            $prev_mail = $this->mail;
+            $prev_login = $this->login;
+            $this->mail = $new_mail;
+            $this->login = null;
+            if(self::exists()==false){
                 $stmt = parent::$db->prepare(
-                    "UPDATE user_informations AS i 
-                    INNER JOIN users AS u ON u.id_informations = i.id 
-                    SET $column = ? 
-                    WHERE u.id = ?"
+                    'UPDATE mails as m 
+                    INNER JOIN users as u 
+                    ON u.id_mail = m.id 
+                    SET m.address = ? 
+                    WHERE u.id = ?'
                 );
+                $stmt->execute([$this->mail, $this->id]);
+                $this->login = $prev_login;
+                return 1;
             }
             else{
-                $stmt = parent::$db->prepare(
-                    "UPDATE mails AS m 
-                    INNER JOIN users AS u ON u.id_mail = m.id 
-                    SET m.address = ? 
-                    WHERE u.id = ?"
-                );
+                $this->login = $prev_login;
+                $this->mail = $prev_mail;
+                return 0;
             }
-            $stmt->execute([$value, $this->id]);
         }
     }

@@ -26,9 +26,6 @@ class Informations extends View{
                     else if($key=='country' || $key=='city'){
                         if(!is_string($value) || strlen($value)>40 || preg_match('~[0-9]+~', $value)) $return = 'invalid_location';
                     }  
-                    else if($key=='mail'){
-                        if(!filter_var($value, FILTER_VALIDATE_EMAIL) && !strpos($_POST['mail'], '@laplateforme.io')) $return='invalid_mail';
-                    }
                     else if($key=='lastname' || $key=='firstname'){
                         if(!is_string($value) || strlen($value)>40 || preg_match('~[0-9]+~', $value)) $return = 'invalid_name';
                     } 
@@ -47,7 +44,7 @@ class Informations extends View{
 
                 switch($return){
                     case 'all_good':
-                        echo "all good";
+                        echo "Vos informations ont bien été mises à jour.";
                         $user->updateInformations($bleached);
                         break;
                     case 'invalid_bio':
@@ -55,9 +52,6 @@ class Informations extends View{
                         break;
                     case 'invalid_location':
                         echo "Il y a eut une erreur dans votre pays ou ville. Veuillez réessayer.";
-                        break;
-                    case 'invalid_mail':
-                        echo "Il y a eut une erreur dans votre adresse mail. Veuillez réessayer.";
                         break;
                     case 'invalid_name':
                         echo "Il y a eut une erreur dans votre nom ou prénom. Veuillez réessayer.";
