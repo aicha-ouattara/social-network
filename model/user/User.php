@@ -313,6 +313,7 @@
                 SET s.picture = ? 
                 WHERE u.login = ?'
             );
+            $this->getSettings();
             $stmt->execute([$path, $this->login]);
         }
 
@@ -324,6 +325,7 @@
                 WHERE u.login = ?'
             );
             $stmt->execute([$path, $this->login]);
+            $this->getSettings();
         }
 
         public function setNewPassword(string $password){
