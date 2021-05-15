@@ -8,7 +8,6 @@
         private $mail=null;
         private $id_mail=null;
         private $id_settings=null;
-        private $id_preferences=null;
         private $id_informations=null;
         private $followers=null;
         private $followings=null;
@@ -30,6 +29,7 @@
          *  getProfile() : get every data from table `users` 
          *  getPublicProfile() : get every data needed to show to a visitor
          *  getFollowers() / getFollowings() : get an user's followers / followings
+         *  getMessages() : get all messages sent and received
          *  isFollowing(id) : check if the user is following another user by hid id
          *  follow(id) / unfollow(id) : make the user follow / unfollow another user by his id
          *  setProfilePicture($path) / setProfileBackground($path) : update db with img's path
@@ -186,7 +186,7 @@
         public function getProfile(){
             $stmt = parent::$db->prepare(
                 'SELECT u.id as `id`, u.login as `login`, u.id_mail as `id_mail`, u.id_settings as `id_settings`,
-                u.id_informations as `id_informations`, u.id_preferences as `id_preferences`, m.address as `mail`, 
+                u.id_informations as `id_informations`, m.address as `mail`, 
                 w.id as `id_wallet`, w.tokens as `tokens`
                 FROM users u 
                 INNER JOIN mails m ON u.id_mail=m.id 
@@ -236,7 +236,7 @@
             return $this;
         }
 
-        public function getPublicProfile(&$return){
+        public function getPublicProfile(&$return=NULL){
             $stmt = parent::$db->prepare(
                 'SELECT u.id as `id`
                 FROM users u 
@@ -276,6 +276,38 @@
             $id!== NULL ? $stmt->execute([$id]) : $stmt->execute([$this->id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->followings = $result['followings'];
+        }
+
+        public function getConversations(){
+            // $stmt = parent::$db->prepare(
+            //     'SELECT `id_userA`, `id_userB`, `date`, `content`, `conversation`, `emoji`, `status` 
+            //     FROM `messages` WHERE ? IN (`id_userA`, `id_userB`)
+            //     ORDER BY `conversation`, `date`'
+            // );
+            // $stmt = parent::$db->prepare(
+            //     'SELECT DISTINCT `date` FROM 
+            //     messages m INNER JOIN 
+            //     (SELECT DISTINCT `conversation`
+            //     FROM `messages` 
+            //     WHERE ? IN (`id_userA`, `id_userB`) ) AS `conversations`'
+            // );
+            $stmt = parent::$db->prepare(
+                'SELECT `id_userA`, `id_userB`, `content`, `date`, `conversation`, `emoji`, `status` FROM messages WHERE id IN
+                (SELECT max(id) FROM messages WHERE ? IN (id_userA, id_userB) GROUP BY `conversation`)'
+            );
+            $stmt->execute([$this->id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function getMessages(){
+            $stmt = parent::$db->prepare(
+                'SELECT `id_userA`, `id_userB`, `content`, `date`, `emoji`, `status`, `conversation` 
+                FROM `messages` WHERE ? IN (`id_userA`, `id_userB`)
+                ORDER BY `conversation`, `date`'
+            );
+            // group by least(`id_userA`, `id_userB`), greatest(`id_userA`, `id_userB`)
+            $stmt->execute([$this->id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function isFollowing(int $id_user2){

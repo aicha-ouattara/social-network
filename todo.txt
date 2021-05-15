@@ -3,8 +3,8 @@ x set an array with needed infos on user
 x create profile
 
 x photo de profil
--> afficher les images ?
-informations personnelles
-modifier le mot de passe
-modifier l'adresse mail
+x afficher les images ?
+x informations personnelles
+x modifier le mot de passe
+x modifier l'adresse mail
 messagerie

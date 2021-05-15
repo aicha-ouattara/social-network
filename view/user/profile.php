@@ -1,5 +1,5 @@
 <main>
-    <?php if(!in_array($user->getHis('picture'), [0, null])){ ?> 
+    <?php if(!in_array($user->getHis('picture'), [0, null]) && is_file(getcwd() .'/'. $user->getHis('picture'))){ ?> 
         <img src ="<?= 'http://localhost/social-network/' .  $user->getHis('picture');?>" style="width:250px;" alt="profile_picture"> <?php } ?>
     <h2><?=$user->getHis('login');?></h2>
     <h3><?=$user->getHis('mail');?></h3>
