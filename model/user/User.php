@@ -288,42 +288,19 @@
         }
 
         public function getConversations(int $range){
-            // $stmt = parent::$db->prepare(
-            //     'SELECT `id_userA`, `id_userB`, `date`, `content`, `conversation`, `emoji`, `status` 
-            //     FROM `messages` WHERE ? IN (`id_userA`, `id_userB`)
-            //     ORDER BY `conversation`, `date`'
-            // );
-            // $stmt = parent::$db->prepare(
-            //     'SELECT DISTINCT `date` FROM 
-            //     messages m INNER JOIN 
-            //     (SELECT DISTINCT `conversation`
-            //     FROM `messages` 
-            //     WHERE ? IN (`id_userA`, `id_userB`) ) AS `conversations`'
-            // );
             parent::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
             $stmt = parent::$db->prepare(
-                'SELECT `id_userA`, `id_userB`, `content`, `date`, `conversation`, `emoji`, `status` 
+                'SELECT `id_sender`, `id_receiver`, `content`, `date`, `conversation`, `emoji`, `status` 
                 FROM messages 
                 WHERE id IN
                     (SELECT max(id) 
                     FROM messages 
-                    WHERE :id IN (id_userA, id_userB) 
+                    WHERE :id IN (id_sender, id_receiver) 
                     GROUP BY `conversation`) 
                 LIMIT :offset,10'
             );
             $stmt->execute([':id' => $this->id, ':offset' => $range]);
             parent::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, true );
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        public function getMessages(){
-            $stmt = parent::$db->prepare(
-                'SELECT `id_userA`, `id_userB`, `content`, `date`, `emoji`, `status`, `conversation` 
-                FROM `messages` WHERE ? IN (`id_userA`, `id_userB`)
-                ORDER BY `conversation`, `date`'
-            );
-            // group by least(`id_userA`, `id_userB`), greatest(`id_userA`, `id_userB`)
-            $stmt->execute([$this->id]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 

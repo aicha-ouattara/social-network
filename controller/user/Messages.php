@@ -25,6 +25,11 @@ class Messages extends View{
             }
             else{
                 $conversation = new Chat($_GET['message']);
+                if($conversation->verifyAccess($user->getHis('id'))){
+                    $messages = $conversation->getMessages();
+                    include VIEW . 'user/conversation.php';
+                }
+                else include VIEW . 'user/messages.php';
             }
         }
 
