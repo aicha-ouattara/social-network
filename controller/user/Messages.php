@@ -19,8 +19,13 @@ class Messages extends View{
             echo "Vous devez vous connecter pour accéder à cette page.";
         }
         else{
-            $conversations = $user->getConversations();
-            include VIEW . 'user/messages.php';
+            if(!isset($_GET['message']) || $_GET['message']==NULL){
+                $conversations = $user->getConversations(0);
+                include VIEW . 'user/messages.php';
+            }
+            else{
+                $conversation = new Chat($_GET['message']);
+            }
         }
 
         $this->main[]=ob_get_clean();

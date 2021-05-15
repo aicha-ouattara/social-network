@@ -254,6 +254,15 @@
             }
         }
 
+        public function getLoginById(){
+            $stmt = parent::$db->prepare(
+                'SELECT `login` FROM `users` WHERE `id` = ?'
+            );
+            $stmt->execute([$this->id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->login = $result['login'];
+        }
+
         public function getHis(string $item){
             return $this->$item;
         }
@@ -278,7 +287,7 @@
             $this->followings = $result['followings'];
         }
 
-        public function getConversations(){
+        public function getConversations(int $range){
             // $stmt = parent::$db->prepare(
             //     'SELECT `id_userA`, `id_userB`, `date`, `content`, `conversation`, `emoji`, `status` 
             //     FROM `messages` WHERE ? IN (`id_userA`, `id_userB`)
@@ -291,11 +300,19 @@
             //     FROM `messages` 
             //     WHERE ? IN (`id_userA`, `id_userB`) ) AS `conversations`'
             // );
+            parent::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
             $stmt = parent::$db->prepare(
-                'SELECT `id_userA`, `id_userB`, `content`, `date`, `conversation`, `emoji`, `status` FROM messages WHERE id IN
-                (SELECT max(id) FROM messages WHERE ? IN (id_userA, id_userB) GROUP BY `conversation`)'
+                'SELECT `id_userA`, `id_userB`, `content`, `date`, `conversation`, `emoji`, `status` 
+                FROM messages 
+                WHERE id IN
+                    (SELECT max(id) 
+                    FROM messages 
+                    WHERE :id IN (id_userA, id_userB) 
+                    GROUP BY `conversation`) 
+                LIMIT :offset,10'
             );
-            $stmt->execute([$this->id]);
+            $stmt->execute([':id' => $this->id, ':offset' => $range]);
+            parent::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, true );
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
