@@ -26,7 +26,7 @@
         followid = "<?php echo isset($visit_user) ? $visit_user->getHis('id') : 0 ?>"
         $(document).on('click', "#unfollow_button", function(){
             if(userid>0 && followid>0){
-                $.post('model/Social/Unfollow.php', {
+                $.post('model/social/Unfollow.php', {
                     unfollow : 1,
                     user1 : userid, 
                     user2 : followid
@@ -41,7 +41,7 @@
         })
         $(document).on('click', "#follow_button", function(){
             if(userid>0 && followid>0){
-                $.post('model/Social/Follow.php', {
+                $.post('model/social/Follow.php', {
                     follow : 1,
                     user1 : userid, 
                     user2 : followid
