@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="218d7e7a-7190-4fd7-a05b-a1dca83e3fb4" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ProjectId" id="1s9bQLgSXuquYzQgFyXiESwUMFV" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="218d7e7a-7190-4fd7-a05b-a1dca83e3fb4" name="Default Changelist" comment="" />
+      <created>1620287734879</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1620287734879</updated>
+      <workItem from="1620287735932" duration="6064000" />
+      <workItem from="1620298824813" duration="2005000" />
+      <workItem from="1620369239179" duration="15493000" />
+      <workItem from="1620628767911" duration="3837000" />
+      <workItem from="1620738172880" duration="2256000" />
+      <workItem from="1620748110950" duration="2000" />
+      <workItem from="1620752687497" duration="235000" />
+      <workItem from="1620802111306" duration="7027000" />
+      <workItem from="1620824158586" duration="631000" />
+      <workItem from="1621236181492" duration="17132000" />
+      <workItem from="1621320518353" duration="226000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="371" y="88" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1621244603934">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="371" y="88" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1621244603934" />
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1620822051988">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1620822051988" />
+    <state x="149" y="0" key="SettingsEditor" timestamp="1621245147999">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="149" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1621245147999" />
+    <state x="0" y="0" width="599" height="680" key="find.popup" timestamp="1621259182713">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="0" y="0" width="599" height="680" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1621259182713" />
+    <state x="297" y="151" key="run.anything.popup" timestamp="1621237627245">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1621237627245" />
+  </component>
+</project>
