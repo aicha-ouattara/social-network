@@ -7,8 +7,8 @@
 class View
 {
 	protected $pageTitle;
-	private $cssList = [];
-	private $jsList = [];
+	public $cssList = [];
+	public $jsList = [];
 
 	function __construct()
 	{
@@ -46,10 +46,15 @@ class View
 
 	public function render()
 	{
-		$this->getHTMLHead();
+		// var_dump($this->jsList);
+		$this->jsList = array_unique ( $this->jsList , SORT_STRING );
+		$this->cssList = array_unique ( $this->cssList , SORT_STRING );
 		$this->getHTMLHeader();
-		$this->getHTMLFooter();
+
 		// $this->getSession();
+		// Generate the head and footer after everything (to link each css / js module)
+		$this->getHTMLHead();
+		$this->getHTMLFooter();
 		echo $this->head;
 		echo $this->header;
 		foreach ($this->main as $content){
