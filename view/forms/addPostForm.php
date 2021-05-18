@@ -25,28 +25,11 @@
 
 	<br>
 
-	<p>Durée du vote</p>
-
-
-	<input type="radio" name="time" value="3" id="three">
-	<label for="three">3h</label>
+	<label for="hashtags">Hastags</label>
+	<textarea name="hashtags" rows="4" cols="50"></textarea>
 
 	<br>
 
-	<input type="radio" name="time" value="6" id="six">
-	<label for="six">6h</label>
-
-	<br>
-
-	<input type="radio" name="time" value="12" id="twelve">
-	<label for="twelve">12h</label>
-
-	<br>
-
-	<input type="radio" name="time" value="24" id="day">
-	<label for="day">24h</label>
-
-	<br>
 
 	<input type="hidden"
 		name="MAX_FILE_SIZE"
