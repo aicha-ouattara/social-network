@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afd2b777-6ba0-40cc-bb44-b467db8e3aae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/classes/Routeur.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Routeur.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/test.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/test.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/test.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/test.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +36,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1621412403116</updated>
-      <workItem from="1621412404458" duration="3031000" />
+      <workItem from="1621412404458" duration="3752000" />
     </task>
     <servers />
   </component>
