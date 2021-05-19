@@ -6,7 +6,7 @@
 class Hashtag extends Request
 {
 
-	public function addHashtags($hashtags)
+	public function addPostHashtags($hashtags)
 	{
 		$ids = [];
 		// For every hashtag
@@ -22,7 +22,8 @@ class Hashtag extends Request
 				$ids[] = $this->addInDb($name);
 			}
 		}
-		var_dump($ids);
+
+		//var_dump($ids);
 		return $ids;
 	}
 
@@ -38,8 +39,6 @@ class Hashtag extends Request
 		}else {
 			return false;
 		}
-
-
 	}
 
 	public function addInDb($name)
