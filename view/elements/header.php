@@ -1,8 +1,8 @@
 <?php $this->cssList[] = 'header.css' ?>
 <?php $this->cssList[] = 'darkmode.css' ?>
 
-<?php //$this->jsList[] = 'darkmode.js' ?>
-<?php //$this->jsList[] = 'headerPhone.js' ?>
+<?php $this->jsList[] = 'darkmode.js' ?>
+<?php $this->jsList[] = 'headerPhone.js' ?>
 
 
 <header class="header">
@@ -12,7 +12,7 @@
     <div class="nav_search">
 
 
-        <div class="container_search"><input type="text" class="search"></div>
+        <div class="container_search"><input type="search" placeholder="Faire une recherche..." class="search"></div>
 
         <div class="container_buttonProfile">
         <button>
@@ -55,15 +55,13 @@
 
         <button>
             <i class="fas fa-star"></i> Popular posts
-        </button><br><br><br><br><br>
-
-        <button>
-            <i class="fas fa-star"></i> Popular posts
         </button>
 
-        <button>
-            <i class="fas fa-star"></i> Popular posts
+        <button class="logout_button">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
         </button>
+
+
 
 <!--        <button>-->
 <!--            <i class="fas fa-comment"></i> Messages-->
@@ -129,6 +127,5 @@
 
 </header>
 
-<script src="assets/js/darkmode.js"></script>
 
 

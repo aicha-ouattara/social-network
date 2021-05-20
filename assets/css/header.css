@@ -1,7 +1,12 @@
 @import "config.css";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
 body {
   background-color: var(--bg-color);
   margin: 0%;
+}
+
+* {
+  font-family: "Noto Sans TC", sans-serif;
 }
 
 /*SIDE NAV*/
@@ -15,21 +20,7 @@ body {
   margin: 1%;
   background-color: var(--primary-color);
   border-radius: 10px;
-  font-family: "SofiaRegular";
 }
-.side_nav i {
-  margin-left: 11%;
-  margin-right: 20%;
-  background-color: #89C0D0;
-  padding: 4%;
-  border-radius: 50%;
-  transition: 0.5s;
-  color: white;
-}
-.side_nav i:hover {
-  color: #ffdd30;
-}
-
 .side_nav button {
   width: 100%;
   font-size: 1em;
@@ -41,7 +32,41 @@ body {
   flex-direction: row;
   align-items: center;
   color: var(--font-color);
-  /*justify-content: space-evenly;*/
+}
+.side_nav button:hover {
+  color: #8ed589;
+}
+.side_nav i {
+  margin-left: 11%;
+  margin-right: 10%;
+  padding: 4%;
+  border-radius: 50%;
+  transition: 0.5s;
+  color: white;
+}
+
+.fa-home {
+  background-color: var(--home);
+}
+
+.fa-hashtag {
+  background-color: var(--abo);
+}
+
+.fa-search {
+  background-color: var(--explore);
+}
+
+.fa-star {
+  background-color: var(--popular);
+}
+
+.fa-sign-out-alt {
+  background-color: red;
+}
+
+.logout_button {
+  margin-top: 60%;
 }
 
 .nav_profile {
@@ -70,7 +95,7 @@ body {
 .container_imgUser {
   width: 20%;
   height: 36px;
-  background-color: #ee5813;
+  background-color: #fce556;
   padding: 3px;
   border-radius: 50%;
   margin-left: 1%;
@@ -101,7 +126,7 @@ body {
 .search {
   text-align: center;
   border: none;
-  background-color: #e5e5e5;
+  background-color: var(--bg-color);
   border-radius: 10px;
   /*border-bottom: 2px solid #8f8f8f;*/
   height: 33px;
@@ -109,6 +134,7 @@ body {
   display: block;
   margin-right: auto;
   margin-left: auto;
+  color: var(--font-color);
   /*background-color: transparent;*/
 }
 
@@ -128,6 +154,10 @@ body {
   position: fixed;
   left: 22%;
   background-color: var(--primary-color);
+}
+
+input[type=search] {
+  background: var(--bg-color) url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
 }
 
 .nav_search i {
@@ -156,6 +186,19 @@ body {
 
 .container_bottomnav {
   display: none;
+}
+
+.fa-cog {
+  -webkit-animation: rotation 3s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
 }
 
 /*# sourceMappingURL=header.css.map */
