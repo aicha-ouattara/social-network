@@ -18,7 +18,7 @@ class Home extends View
 		// Cela va nous permettre de travailler par petits modules qu'on pourrait répéter ailleurs
 
         ob_start();
-        include(VIEW . 'elements/header.php');
+
         $this->main[] = ob_get_clean();
 
 		

@@ -1,11 +1,15 @@
 @import "config.css";
+
+
+
 body {
   background-color: var(--bg-color);
   margin: 0%;
 }
 
 /*SIDE NAV*/
-.side_nav {
+
+.side_nav{
   display: flex;
   flex-direction: column;
   width: 21%;
@@ -15,22 +19,27 @@ body {
   margin: 1%;
   background-color: var(--primary-color);
   border-radius: 10px;
-  font-family: "SofiaRegular";
-}
-.side_nav i {
-  margin-left: 11%;
-  margin-right: 20%;
-  background-color: #89C0D0;
-  padding: 4%;
-  border-radius: 50%;
-  transition: 0.5s;
-  color: white;
-}
-.side_nav i:hover {
-  color: #ffdd30;
+  font-family: 'SofiaRegular';
+
+
+  i{
+    margin-left: 11%;
+    margin-right: 20%;
+    background-color: #89C0D0;
+    padding: 4%;
+    border-radius: 50%;
+    transition: 0.5s;
+    color: white;
+
+    &:hover{
+      color: #ffdd30;
+
+    }
+  }
+
 }
 
-.side_nav button {
+.side_nav button{
   width: 100%;
   font-size: 1em;
   padding: 2%;
@@ -41,15 +50,21 @@ body {
   flex-direction: row;
   align-items: center;
   color: var(--font-color);
+
   /*justify-content: space-evenly;*/
+
 }
 
-.nav_profile {
+
+
+
+.nav_profile{
   height: 20%;
   display: flex;
+
 }
 
-.user_nav {
+.user_nav{
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -57,17 +72,19 @@ body {
   width: 80%;
   /*margin-left: 10%;*/
   z-index: 11;
+
+
 }
 
-.name_nav {
+.name_nav{
   font-size: 0.5em;
 }
 
-.container_name_nav {
+.container_name_nav{
   width: 50%;
 }
 
-.container_imgUser {
+.container_imgUser{
   width: 20%;
   height: 36px;
   background-color: #ee5813;
@@ -76,29 +93,37 @@ body {
   margin-left: 1%;
 }
 
-.logo {
+.logo{
   margin-top: 10%;
   margin-bottom: 10%;
   display: block;
   margin-right: auto;
   margin-left: auto;
   width: 80%;
+
 }
 
-.link_sidenav {
+.link_sidenav{
   background-color: #e684af;
   width: 20%;
 }
 
+
+
 /*.fa-home{*/
 /*    background-color: #e684af;*/
 /*}*/
+
+
+
 /*SEARCH*/
-.container_search {
+
+
+.container_search{
   width: 60%;
 }
 
-.search {
+.search{
   text-align: center;
   border: none;
   background-color: #e5e5e5;
@@ -110,13 +135,16 @@ body {
   margin-right: auto;
   margin-left: auto;
   /*background-color: transparent;*/
+
 }
 
 .search:focus {
   outline: none;
 }
 
-.nav_search {
+
+
+.nav_search{
   width: 76%;
   height: 70px;
   margin: 1%;
@@ -128,9 +156,11 @@ body {
   position: fixed;
   left: 22%;
   background-color: var(--primary-color);
+
 }
 
-.nav_search i {
+.nav_search i{
+
   /*padding: 0%;*/
   font-size: 25px;
   border-radius: 50%;
@@ -139,23 +169,36 @@ body {
   color: #bebebe;
 }
 
-.nav_search button {
+.nav_search button{
   font-size: 1em;
   /*padding: 50px;*/
   border: none;
   background-color: transparent;
   transition: 0.5s;
+
+
 }
 
-.container_buttonProfile {
+.container_buttonProfile{
   width: 20%;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.container_bottomnav {
+
+
+.container_bottomnav{
   display: none;
 }
 
-/*# sourceMappingURL=header.css.map */
+
+//DARKMODE
+
+
+
+
+
+
+
+

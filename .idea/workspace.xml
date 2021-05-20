@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ab988ae-3cc6-483c-b888-3c9988aae493" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/css/config.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/css/header.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/darkmode.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/darkmode.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/darkmode.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/darkmode.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/darkmode.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/darkmode.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/darkmode.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/darkmode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/View.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/Home.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/Home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/elements/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/elements/footer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/elements/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/elements/header.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +35,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -35,11 +47,30 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1621425935698</updated>
-      <workItem from="1621425936922" duration="2486000" />
+      <workItem from="1621425936922" duration="6569000" />
+      <workItem from="1621494019168" duration="12860000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="306" y="121" key="EditFileWatcherDialog" timestamp="1621504993963">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="306" y="121" key="EditFileWatcherDialog/0.0.1280.680@0.0.1280.680" timestamp="1621504993963" />
+    <state x="149" y="0" key="SettingsEditor" timestamp="1621504986391">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="149" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1621504986391" />
+    <state x="291" y="0" width="697" height="680" key="find.popup" timestamp="1621511010997">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="291" y="0" width="697" height="680" key="find.popup/0.0.1280.680@0.0.1280.680" timestamp="1621511010997" />
+    <state x="303" y="1" key="search.everywhere.popup" timestamp="1621511675700">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1621511675700" />
   </component>
 </project>

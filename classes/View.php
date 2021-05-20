@@ -61,7 +61,9 @@ class View
 			echo $content;
 		}
 		echo $this->footer;
-	}
+
+
+    }
 
 
 }

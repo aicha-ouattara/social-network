@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'SofiaRegular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Sofia Pro Regular'), url('storage/font/sofiafont/Regular.woff') format('woff');
+}
+
+:root {
+  --primary-color: #ffffff;
+  --secondary-color: #1B1E24;
+  --font-color: #1B1E24;
+  --bg-color: #e5e5e5;
+  --heading-color: #1B1E24;
+}
+
+[data-theme="dark"] {
+  --primary-color: #323943;
+  --secondary-color: #fff;
+  --font-color: #fff;
+  --bg-color: #1B1E24;
+  --heading-color: #fff;
+}

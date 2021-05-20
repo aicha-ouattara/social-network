@@ -1,12 +1,28 @@
-// inspired by Ryan's svg animation
-// https://codepen.io/ryanparag/pen/rNeybEe
+const lightMode = document.querySelector('.sun');
+const darkMode = document.querySelector('.moon');
 
-const darkMode = document.querySelector(".theme-toggle");
+const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
 
-function darkify() {
-    document.documentElement.classList.toggle("theme--night");
+lightMode.onclick = function(){
+    document.documentElement.setAttribute('data-theme', 'dark');
+    lightMode.style = "display: none";
+    darkMode.style = "display: block";
+    localStorage.setItem('theme', 'dark');
 }
 
-darkMode.addEventListener("click", darkify);
+darkMode.onclick = function(){
+    document.documentElement.setAttribute('data-theme', 'light');
+    lightMode.style = "display: block";
+    darkMode.style = "display: none";
+    localStorage.setItem('theme', 'light');
 
-darkify();
+}
+
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+
+    if (currentTheme === 'dark') {
+        lightMode.style = "display: none";
+        darkMode.style = "display: block";
+    }
+}
