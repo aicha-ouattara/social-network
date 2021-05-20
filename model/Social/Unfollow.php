@@ -9,6 +9,6 @@
             echo $user1->isFollowing($_POST['user2']);
         }
         else{
-            echo "notsub";
-        }
+            echo 'Une erreur inattendue est survenue.';
+         }
     }
