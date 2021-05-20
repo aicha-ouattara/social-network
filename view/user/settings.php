@@ -1,4 +1,7 @@
 <section>
+    <?php echo isset($settings_return) && $settings_return ? '<p id="settings_return">' . $settings_return . '</p>' : null;?>
+
+    <!-- Profile picture -->
     <?php if($user->getHis('picture')==0){ ?>
         <p>Vous n'avez pas encore de photo de profil.</p>
     <?php } 
@@ -10,6 +13,8 @@
             <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
             <button type="submit" name="submit_profile_picture">Envoyer</button>
         </form>
+
+    <!-- Background picture -->
     <?php if($user->getHis('background')==0){ ?>
         <p>Vous n'avez pas encore choisi d'arrière plan</p>
     <?php } 
@@ -22,6 +27,7 @@
         <button type="submit" name="submit_profile_background">Envoyer</button>
     </form>
 
+    <!-- Password / Mail -->
     <form method="post" action="settings">
         <input type="password" name="modify_password" minlength="8" placeholder="********" required>
         <button type="submit" name="submit_modify_password">Modifier mon mot de passe</button>
@@ -30,4 +36,11 @@
         <input type="email" name="modify_mail" minlength="5" maxlength="40" value="<?=$user->getHis('mail');?>" required>
         <button type="submit" name="submit_modify_mail">Modifier mon adresse mail</button>
     </form>
+
+    <hr>
+    <form method="post" action="delete" id="form_delete_account">
+        <input type="hidden" name="delete_account" value="1">
+        <button id="submit_delete_account">Supprimer mon compte</button>
+    </form>
+    <p><a href="profil">Retour</a></p>
 </section>

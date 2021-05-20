@@ -3,7 +3,9 @@
 
     <form method="post" action="informations" style="display:flex;flex-flow:column;">
         <label for="bio">Bio :</label>
-        <textarea name="bio" rows="5" cols="40" placeholder="Je m'appelle John, j'ai 28 ans et j'habite à Bordeaux..."><?php echo !in_array($user->getHis('bio'), [0, null, '']) ? $user->getHis('bio') : null ?></textarea>
+        <textarea name="bio" rows="5" cols="40" placeholder="Je m'appelle John, j'ai 28 ans et j'habite à Bordeaux...">
+            <?php echo !in_array($user->getHis('bio'), [0, null, '']) ? $user->getHis('bio') : null ?>
+        </textarea>
         <label for="country">Pays :</label>
         <select name="country">
             <option value=""></option>
@@ -22,7 +24,7 @@
             <option value="Norvège">Norvège</option>
         </select>
         <label for="city">Ville :</label>
-        <input type="text" name="city" min="2" max="40" value="<?=$user->getHis('city');?>">
+        <input type="text" name="city" min="2" max="40" value="<?=null !== $user->getHis('city') ? $user->getHis('city') : null;?>">
         <label for="lastname">Nom :</label>
         <input type="text" name="lastname" value="<?=$user->getHis('lastname');?>" min="1" max="40">
         <label for="firstname">Prénom :</label>
@@ -33,6 +35,8 @@
         <input type="tel" name="phone" pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}" placeholder="01-23-45-67-89" value="<?=$user->getHis('phone');?>">
         <button name="submit">Mettre à jour</button>
     </form>
+
+    <a href="profil">Retour</a>
 </section>
 
 <script>

@@ -9,11 +9,8 @@ class Profile extends View{
     public function __construct()
 	{
         require VIEW . 'elements/session.php';
-
-        /**
-         * Replace all echos with specifics views
-         */
         ob_start();
+
         if(isset($_GET['user']) && $_GET['user']){
             $return = '';
             $visit_user = new User(['login' => $_GET['user']]);
@@ -24,24 +21,31 @@ class Profile extends View{
                 $visit_user = $visit_user->getPublicProfile($return);
                 switch($return){
                     case 'no_user':
-                        $this->main[] = "Aucun utilisateur du nom de " . $_GET['user'] . " n'a été trouvé.";
+                        $error = ['origin' => 'profile', 'message' => 'Aucun utilisateur du nom de ' . $_GET['user'] . ' n\'a été trouvé.'];
+                        include VIEW . 'error.php';
                         break;
                     case 'user_found':
                         include VIEW . 'user/visit_profile.php';
                         break;
                     default:
-                        $this->main[] = "Une erreur inattendue est survenue.";
+                        $error = ['origin' => 'profile', 'message' => 'Une erreur inattendue est survenue.'];
+                        include VIEW . 'error.php';
                         break;
                 }
             }
         }
         
         else if(!isset($authorize) || $authorize!==1){
-            $this->main[] = "Vous devez vous connecter.";
+            $error = ['origin' => 'profile', 'message' => 'Vous devez vous connecter pour accéder à cette page.<br><a href="connection">Se connecter</a>.'];
+            include VIEW . 'error.php';
         }
 
         else{
-            include VIEW . 'user/profile.php';
+            if(isset($_POST['disconnect']) && $_POST['disconnect']==1){
+                setcookie('authtoken', '', -1, '/');
+                header('Location:' . URL);
+            }
+            else include VIEW . 'user/profile.php';
         }
 
         $this->main[] = ob_get_clean();

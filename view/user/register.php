@@ -1,3 +1,6 @@
+<?php if(isset($register_return) && $register_return){?>
+    <p><?=$register_return;?></p>
+<?php } else { ?>
 <form id="register_form" method="post" action="register">
     <label for="login">Pseudo :</label>
     <input type="text" name="login" minlength="4" maxlength="30" required>
@@ -9,3 +12,4 @@
     <input type="email" name="mail" minlength="5" maxlength="40" required>
     <input type="submit" name="submit" value="Valider">
 </form>
+<?php } ?>

@@ -9,22 +9,15 @@ class Register extends View{
 	public function __construct()
 	{
 		require VIEW . 'elements/session.php';
-
-		/**
-         * Replace all echos with specifics views
-         */
+		ob_start();
 		
 		if(isset($authorize) && $authorize==1){
-            echo "Vous êtes déjà inscrit.";
+            $register_return = 'Vous êtes déjà inscrit sur le site.<br>Revenir à l\'<a href="' . URL . '">Accueil</a>.';
         }
 
 		else if(isset($_POST['submit']) && $_POST['submit']){
 			$return='';
-
-			/**
-             * Verify all inputs
-             */
-
+			// Verify all inputs
 			if(count($_POST)!==5) $return='invalid_form';
             else if($_POST['password']!==$_POST['cpassword']) $return='invalid_match';
             else if(strlen($_POST['login'])<4 || strlen($_POST['login'])>30 || 
@@ -32,57 +25,47 @@ class Register extends View{
             else if(strlen($_POST['password'])<8 || !self::verifyPwd($_POST['password'])) $return='invalid_password';
             else if(!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL) || !strpos($_POST['mail'], '@laplateforme.io')) $return='invalid_mail';
 
-			/**
-             * If everything's in order
-             */
-			
+			// If everything is OK
 			else $user = new User($_POST, $return);
-
-			/**
-			 * Action on $return value
-			 */
 			switch($return){
 				case 'invalid_form':
 				case 'invalid_field':
-					echo "Une erreur est survenue dans le traitement de vos données.";
+					$register_return = "Une erreur est survenue dans le traitement de vos données.<br>Veuillez <a href='register'>Réessayer</a>.";
 					break;
 				case 'invalid_match':
-					echo "Les mots de passe ne correspondent pas.";
+					$register_return = "Les mots de passe ne correspondent pas.<br>Veuillez <a href='register'>Réessayer</a>.";
 					break;
 				case 'invalid_login':
-					echo "Le login n'est pas valide.";
+					$register_return = "Le login n'est pas valide.<br>Veuillez <a href='register'>Réessayer</a>.";
 					break;
 				case 'invalid_password':
-					echo "Le mot de passe n'est pas assez fort.";
+					$register_return = "Le mot de passe n'est pas assez fort.<br>Veuillez <a href='register'>Réessayer</a>.";
 					break;
 				case 'invalid_mail':
-					echo "L'adresse mail n'est pas valide.";
+					$register_return = "L'adresse mail n'est pas valide.<br>Veuillez <a href='register'>Réessayer</a>.";
 					break;
 				case 'allgood':
 					switch($user->subscribe()){
 						case 'success':
-							echo "L'inscription a bien été enregistrée.";
+							$register_return = "L'inscription a bien été enregistrée. Un e-mail de confirmation va vous être envoyé.<br><a href='" . URL . "'>Accueil</a>";
 							break;
 						case 'user_exists':
-							echo "L'adresse mail ou le nom d'utilisateur est déjà utilisé.";
+							$register_return = "L'adresse mail ou le nom d'utilisateur est déjà utilisé.<br>Veuillez <a href='register'>Réessayer</a>.";
 							break;
 						case 'error':
 						default:
-							echo "Une erreur est survenue dans le traitement de vos données.";
+						$register_return = "Une erreur est survenue dans le traitement de vos données.<br>Veuillez <a href='register'>Réessayer</a>.";
 							break;
 					}
 					break;
 				default:
-					echo "Une erreur inattendue est survenue";
+					$register_return = "Une erreur inattendue est survenue.<br>Veuillez <a href='register'>Réessayer</a>.";
 					break;
 			}
 		}
-		
-		else include './view/user/register.php';
+		include './view/user/register.php';
 
-		$this->main[] = '';
-		
-		
+		$this->main[] = ob_get_clean();
 		$this->render();
 	}
 

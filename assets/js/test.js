@@ -1,1 +1,1 @@
-alert("yeah!!!!");
+console.log('ok')

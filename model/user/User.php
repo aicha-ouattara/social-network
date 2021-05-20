@@ -12,6 +12,13 @@
         private $followers=null;
         private $followings=null;
         private $picture=null;
+        private $bio=null;
+        private $city=null;
+        private $country=null;
+        private $lastname=null;
+        private $firstname=null;
+        private $birthdate=null;
+        private $phone=null;
 
         /**
          * Available functions :
@@ -260,7 +267,7 @@
             );
             $stmt->execute([$this->id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->login = $result['login'];
+            $result !== false ? $this->login = $result['login'] : $this->login = 'Utilisateur supprimé';
         }
 
         public function getHis(string $item){
@@ -339,8 +346,8 @@
                 SET s.picture = ? 
                 WHERE u.login = ?'
             );
-            $this->getSettings();
             $stmt->execute([$path, $this->login]);
+            $this->getSettings();
         }
 
         public function setProfileBackground(string $path){
@@ -401,5 +408,15 @@
                 $this->mail = $prev_mail;
                 return 0;
             }
+        }
+
+        public function deleteAccount(){
+            $stmt = parent::$db->prepare(
+                "DELETE FROM `mails` 
+                WHERE `address` = ?;
+                DELETE FROM `users` 
+                WHERE `login` = ?;"
+            );
+            $stmt->execute([$this->mail, $this->login]);
         }
     }

@@ -5,7 +5,7 @@
     $day = date_format(new Datetime($conversation['date']), 'd-m-Y');
     $time = date_format(new Datetime($conversation['date']), 'H:i:s');
 ?>
-<a href="messages&message=<?=$conversation['conversation'];?>">
+<a href="messages&conversation=<?=$conversation['conversation'];?>">
     <div style="display:flex;justify-content:space-around">
         <p><?=$chat_pair->getHis('login');?> </p>
         <p><?=$conversation['content'];?> </p>

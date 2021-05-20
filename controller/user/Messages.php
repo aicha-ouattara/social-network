@@ -9,27 +9,24 @@ class Messages extends View{
     public function __construct()
 	{
         require VIEW . 'elements/session.php';
-        /**
-         * Replace all echos with specifics views
-         */
-
         ob_start();
 
         if(!isset($authorize) || $authorize!==1){
-            echo "Vous devez vous connecter pour accéder à cette page.";
+            $error = ['origin' => 'messages', 'message' => "Vous devez vous connecter pour accéder à cette page."];
+            include VIEW . 'error.php';
         }
         else{
-            if(!isset($_GET['message']) || $_GET['message']==NULL){
+            if(!isset($_GET['conversation']) || $_GET['conversation']==NULL){
                 $conversations = $user->getConversations(0);
                 include VIEW . 'user/messages.php';
             }
             else{
-                $conversation = new Chat($_GET['message']);
+                $conversation = new Chat($_GET['conversation']);
                 if($conversation->verifyAccess($user->getHis('id'))){
                     $messages = $conversation->getMessages();
                     include VIEW . 'user/conversation.php';
                 }
-                else include VIEW . 'user/messages.php';
+                else header('Location:' . URL);
             }
         }
 

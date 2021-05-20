@@ -23,17 +23,18 @@
                 'SELECT
                 s.login sender, r.login receiver, 
                 m.id_sender, m.id_receiver, m.date, m.content, m.conversation, m.emoji, m.status 
-            FROM
-                messages m
-            JOIN
-                users s ON
-                m.id_sender = s.id
-            JOIN
-                users r ON
-                m.id_receiver = r.id
-            WHERE m.conversation = ?'
+                FROM
+                    messages m
+                LEFT JOIN
+                    users s ON
+                    m.id_sender = s.id
+                LEFT JOIN
+                    users r ON
+                    m.id_receiver = r.id
+                WHERE m.conversation = ?'
             );
             $stmt->execute([$this->conversation]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $results;
         }
     }

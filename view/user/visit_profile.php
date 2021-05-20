@@ -33,7 +33,6 @@
                 }, function(data){
                     if(data==0){
                         $('#un-fo_button').html('<button id="follow_button">S\'abonner</button> <i class="fas fa-check"></i> Désabonné')
-                        // $('#div_followers').html("Followers : " + followers)
                         $("#div_followers").load(window.location.href + " #div_followers")
                     }
                 })
