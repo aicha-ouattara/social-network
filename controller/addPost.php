@@ -5,7 +5,7 @@
  */
 class addPost
 {
-	private $categorieId;
+	private $categoryId;
 	private $imagePath;
 	private $question;
 	private $answer1;
@@ -13,32 +13,21 @@ class addPost
 	private $hashtag_ids;
 
 
-	function __construct()
-	{
+	function __construct(){
 		//var_dump($_POST);
 		//var_dump($_FILES);
-
-		// $target_dir = UPLOADS;
-		//$target_file = UPLOADS. "/" . basename($_FILES["imageToUpload"]["name"]);
-		//$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
 		if(isset($_POST["submit"])) {
-			//check the data and protections
-			$this->getData();
-
+			//get the data and protects
+			$hashtag_ids = $this->getData();
 			// if no json error occured -> we add the post in database
-			$this->addInDb();
-
-			echo "<pre>";
-			echo "category id : ".$this->category."<br>";
-			echo "question : ".$this->question."<br>";
-			echo "answer1 : ".$this->answer1."<br>";
-			echo "answer2 : ".$this->answer2."<br>";
-			echo "hashtags : ". var_dump($this->hashtag_ids)."<br>";
-			echo "</pre>";
+			$postId = $this->addInDb();
+			// then we link post hashtags in post_hashtags table
+			$this->linkPostHashtags($postId, $hashtag_ids);
+			// If no error occured, return success
+			new JsonResponse(200, "Post saved");
 		}
 		else {
-			echo new JsonResponse(400, "Aucunes données envoyées");
+			new JsonResponse(400, "Aucunes données envoyées");
 			die;
 		}
 	}
@@ -56,27 +45,26 @@ class addPost
 			die;
 		}
 		// Save category id
-		$this->category = $_POST['category'];
+		$this->categoryId = $_POST['category'];
 		// Protect question and answers
 		$this->question = htmlspecialchars($_POST['question']);
 		$this->answer1 = htmlspecialchars($_POST['firstAnswer']);
 		$this->answer2 = htmlspecialchars($_POST['secondAnswer']);
 		// Link this post to hashtags (creates hashtag if not already in db)
-		$this->hashtag_ids = $this->addHashtags($_POST["hashtags"]);
-
+		$hashtag_ids = $this->addHashtags($_POST["hashtags"]);
+		return $hashtag_ids;
 	}
 
 	private function checkSource(){
 		// if there is an image saved temporary on the server
 		if (isset($_FILES["imageToUpload"]["tmp_name"]) && $_FILES["imageToUpload"]["tmp_name"] != '') {
 			$uploaddir = UPLOADS . '/';
-
 			// each user should have a folder (based on the id) in the uploads directory => to prevent same names
 			$uploadfile = $uploaddir . basename($_FILES['imageToUpload']['name']);
-
+			$this->imagePath = $uploadfile;
 			// Saving the picture in uploads
 			if (!move_uploaded_file($_FILES['imageToUpload']['tmp_name'], $uploadfile)) {
-				echo new JsonResponse(400, "Erreur image");
+				new JsonResponse(400, "Erreur image");
 				die;
 			}
 		}
@@ -98,12 +86,36 @@ class addPost
 
 	private function addHashtags($data){
 		$hashtags = explode(' ', $data);
+		if (($key = array_search('', $hashtags)) !== false) {
+			unset($hashtags[$key]);
+		}
 		$model = new Hashtag();
-		return $model->addPostHashtags($hashtags);
+		$ids = $model->addPostHashtags($hashtags);
+		return $ids;
 	}
 
-	public function addInDb()
-	{
-		//
+	private function addInDb(){
+		$date = new DateTime();
+		$date = $date->format('Y-m-d h:i:s');
+
+		$model = new Post();
+		$model->setUserId(2);
+		$model->setCategoryId(intval($this->categoryId));
+		$model->setPath($this->imagePath);
+		$model->setDate($date);
+		$model->setQuestion($this->question);
+		$model->setChoice1($this->answer1);
+		$model->setChoice2($this->answer2);
+
+		$id = $model->addPostInDb();
+		return ($id);
+		//var_dump($model->getPostsFromUserId(2));
+	}
+
+	public function linkPostHashtags($postId, $hashtag_ids){
+		$model = new Hashtag();
+		foreach ($hashtag_ids as $hash_id) {
+			$model->linkHashtagToPost($postId, $hash_id);
+		}
 	}
 }

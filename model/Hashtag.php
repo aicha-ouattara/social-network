@@ -6,14 +6,11 @@
 class Hashtag extends Request
 {
 
-	public function addPostHashtags($hashtags)
-	{
+	public function addPostHashtags($hashtags){
 		$ids = [];
 		// For every hashtag
 		foreach ($hashtags as $name) {
 			// check if hashtag already exists
-			echo ($name);
-			echo "<br>";
 			if ($id = $this->exist($name)) {
 				$ids[] = $id;
 			}
@@ -22,13 +19,10 @@ class Hashtag extends Request
 				$ids[] = $this->addInDb($name);
 			}
 		}
-
-		//var_dump($ids);
 		return $ids;
 	}
 
-	public function exist($name)
-	{
+	public function exist($name){
 		$this->connectdb();
 		$query = $this->pdo->prepare("SELECT * from hashtags WHERE name=:name");
 		$query->execute(["name"=>$name]);
@@ -48,5 +42,13 @@ class Hashtag extends Request
 		$query->execute(['name'=>$name]);
 		$this->dbclose();
 		return $this->exist($name);
+	}
+
+	public function linkHashtagToPost($postId, $hashtag_id)
+	{
+		$this->connectdb();
+		$query = $this->pdo->prepare("INSERT INTO post_hashtags (id_post, id_hashtag) VALUES (:postId, :hashtagId)");
+		$query->execute(['postId'=>$postId, 'hashtagId'=>$hashtag_id]);
+		$this->dbclose();
 	}
 }

@@ -16,6 +16,7 @@ class Post extends Request
 
 	function __construct($tab = null)
 	{
+		parent::__construct();
 		// Used to create a post instance from a database line
 		if (isset($tab)) {
 			$this->id 			= $tab['id'];
@@ -49,13 +50,13 @@ class Post extends Request
 	public function setChoice2($choice2){$this->choice2 = $choice2;}
 
 
-	public function addPostInDb()
-	{
+	public function addPostInDb(){
 		$this->connectdb();
-		$query = $this->pdo->prepare("INSERT INTO posts (id_user, id_category, path, choice1, choice2, question) VALUES (:userId, :categoryId, )");
-		$query->execute(["userId"=>$userId]);
-		$res = $query->fetchAll(PDO::FETCH_ASSOC);
+		$query = $this->pdo->prepare("INSERT INTO posts (id_user, id_category, img_path, upload_date, choice1, choice2, question) VALUES (:userId, :categoryId, :img_path, :upload_date, :choice1, :choice2, :question )");
+		$query->execute(["userId" => $this->userId, "categoryId" => $this->categoryId, "img_path" => $this->path, "upload_date" => $this->date, "choice1" => $this->choice1, "choice2" => $this->choice2, "question" => $this->question]);
+		$id = $this->pdo->lastInsertId();
 		$this->dbclose();
+		return ($id);
 	}
 
 	///// SEARCH IN DATABASE

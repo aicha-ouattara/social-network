@@ -16,8 +16,7 @@ Class Request
 		$this->dbname = 'socialnetwork';
 	}
 
-	public function connectdb()
-	{
+	public function connectdb(){
 		try {
 			$this->pdo = new pdo("mysql:dbname=".$this->dbname.";host=".$this->hostname, $this->username,"");
 		}
