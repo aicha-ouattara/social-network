@@ -22,7 +22,7 @@
             $stmt = self::$db->prepare(
                 'SELECT
                 s.login sender, r.login receiver, 
-                m.id_sender, m.id_receiver, m.date, m.content, m.conversation, m.emoji, m.status 
+                m.id, m.id_sender, m.id_receiver, m.date, m.content, m.conversation, m.emoji, m.status 
                 FROM
                     messages m
                 LEFT JOIN

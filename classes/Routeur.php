@@ -38,6 +38,7 @@ class Routeur
 		if(key_exists($_SESSION['url'][0], $controllers))
 		{
 			$controller = $controllers[$_SESSION['url'][0]];
+			
 			return new $controller();
 		}
 		else {
