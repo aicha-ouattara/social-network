@@ -28,6 +28,9 @@ class Test extends View
 		include(VIEW.'forms/test.php');
 		$this->main[] = ob_get_clean();
 
+		// $model = new Like();
+		// var_dump($model->getAllUserLikes(2));
+
 		//On rend directement la page avec la méthode "render"
 		$this->render();
 	}

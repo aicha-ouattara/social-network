@@ -5,6 +5,7 @@
  */
 class Like extends Request
 {
+	private $id;
 	private $user_id;
 	private $post_id;
 
@@ -13,8 +14,9 @@ class Like extends Request
 	{
 		parent::__construct();
 		if(isset($tab)){
-			$this->user_id = $tab['user_id'];
-			$this->post_id = $tab['post_id'];
+			$this->id		= $tab['id'];
+			$this->user_id	= $tab['user_id'];
+			$this->post_id	= $tab['post_id'];
 		}
 	}
 
@@ -27,7 +29,6 @@ class Like extends Request
 	public function changeLike($user_id, $post_id){
 		// if this like exists we drop it
 		if ($id = $this->likeExists($user_id, $post_id)) {
-			echo "<br>".$id."<br>";
 			$this->connectdb();
 			$query = $this->pdo->prepare("DELETE from post_likes WHERE id = :id");
 			$query->execute(["id" => $id]);
@@ -47,7 +48,6 @@ class Like extends Request
 		$query->execute(["user_id" => $user_id, "post_id" => $post_id]);
 		$res=$query->fetchAll(PDO::FETCH_ASSOC);
 		$this->dbclose();
-		var_dump($res);
 		if (!empty($res)) {
 			return $res[0]['id'];
 		}else {
@@ -56,6 +56,38 @@ class Like extends Request
 	}
 
 	public function getAllUserLikes($user_id){
-		// code...
+		$this->connectdb();
+		$query = $this->pdo->prepare("SELECT * from post_likes WHERE user_id = :user_id");
+		$query->execute(["user_id" => $user_id]);
+		$res=$query->fetchAll(PDO::FETCH_ASSOC);
+		$this->dbclose();
+		if (!empty($res)) {
+			$ret = [];
+			// Change results to like objects
+			foreach ($res as $line) {
+				$ret[] = new Like($line);
+			}
+			return $ret;
+		}else {
+			return false;
+		}
+	}
+
+	public function getAllPostLikes($post_id){
+		$this->connectdb();
+		$query = $this->pdo->prepare("SELECT * from post_likes WHERE post_id = :post_id");
+		$query->execute(["post_id" => $post_id]);
+		$res=$query->fetchAll(PDO::FETCH_ASSOC);
+		$this->dbclose();
+		if (!empty($res)) {
+			$ret = [];
+			// Change results to like objects
+			foreach ($res as $line) {
+				$ret[] = new Like($line);
+			}
+			return $ret;
+		}else {
+			return false;
+		}
 	}
 }
