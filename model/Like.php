@@ -20,6 +20,7 @@ class Like extends Request
 		}
 	}
 
+	public function getId(){return $this->id;}
 	public function getUserId(){return $this->user_id;}
 	public function getPostId(){return $this->post_id;}
 

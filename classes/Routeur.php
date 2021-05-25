@@ -12,7 +12,8 @@ class Routeur
 		"friends"			=> 'Friends',
 		"test"				=> 'Test',
 		"addPost"			=> 'AddPost',
-		"likes"				=> 'LikeManager'
+		"likes"				=> 'LikeManager',
+		"comments"			=> 'CommentManager',
 	];
 	private 	$controller;	// Controleur sélectionné
 
