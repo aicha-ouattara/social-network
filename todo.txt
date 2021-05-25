@@ -1,10 +1,1 @@
-x keep connected status on each page
-x set an array with needed infos on user
-x create profile
-
-x photo de profil
-x afficher les images ?
-x informations personnelles
-x modifier le mot de passe
-x modifier l'adresse mail
-messagerie
+messagerie ( status + sockets / server ) 

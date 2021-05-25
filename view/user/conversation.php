@@ -71,7 +71,7 @@
         emoji = emoji.split(' ')
         emoji = emoji[1].replace('emoji_', '')
         $.post(
-            'model/social/MessageHandler.php', 
+            'model/social/Message.php', 
             {emoji, message:message, user:"<?=$user->getHis('id');?>", conversation:"<?=$message['conversation'];?>"}, 
             function(data){
                 $("#" + div).load(location.href + " #" + div)
@@ -81,7 +81,7 @@
     function deleteMessage(id){
         id = id.replace('message_', '')
         $.post(
-            'model/social/MessageHandler.php', 
+            'model/social/Message.php', 
             {delete:1, id, user:"<?=$user->getHis('id');?>", conversation:"<?=$message['conversation'];?>"}, 
             function(data){
                 $('#section_messages').load(location.href + ' #section_messages')

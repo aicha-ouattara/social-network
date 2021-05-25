@@ -37,12 +37,14 @@
          *  getPublicProfile() : get every data needed to show to a visitor
          *  getFollowers() / getFollowings() : get an user's followers / followings
          *  getMessages() : get all messages sent and received
-         *  isFollowing(id) : check if the user is following another user by hid id
-         *  follow(id) / unfollow(id) : make the user follow / unfollow another user by his id
-         *  setProfilePicture($path) / setProfileBackground($path) : update db with img's path
+         *  isFollowing($id) : check if the user is following another user by hid $id
+         *  follow($id) / unfollow(id) : make the user follow / unfollow another user by his $id
+         *  setProfile($item, $path) : set new $path for specified $item
          *  setNewPassword($pwd) : update user's password
+         *  updateHis(*) : update one user value
          *  updateInformations($informations[]) : update user's informations
          *  updateMail($mail) : verify if the new mail already exists and update it
+         *  deleteAccount() : delete the user
          */
         
         public function __construct(array $data = NULL, &$return = NULL){
@@ -142,7 +144,7 @@
             if(self::exists()==false){
                 $ip = $_SERVER['REMOTE_ADDR'];
                 try{
-                    $stmt = parent::$db->prepare(
+                    $stmt = self::$db->prepare(
                         "BEGIN;
                         INSERT INTO mails (address) VALUES(?);
                         SELECT @mail_id := LAST_INSERT_ID();
@@ -191,7 +193,7 @@
         }
 
         public function getProfile(){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'SELECT u.id as `id`, u.login as `login`, u.id_mail as `id_mail`, u.id_settings as `id_settings`,
                 u.id_informations as `id_informations`, m.address as `mail`, 
                 w.id as `id_wallet`, w.tokens as `tokens`
@@ -213,7 +215,7 @@
         }
 
         public function getSettings(){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'SELECT s.picture, s.background FROM user_settings s 
                 INNER JOIN users u ON u.id_settings = s.id 
                 WHERE u.id = ?'
@@ -228,7 +230,7 @@
         }
 
         public function getInformations(){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'SELECT i.bio, i.country, i.city, i.lastname, i.firstname, i.birthdate, i.registerdate, i.phone 
                 FROM user_informations i 
                 INNER JOIN users u ON u.id_informations = i.id 
@@ -244,7 +246,7 @@
         }
 
         public function getPublicProfile(&$return=NULL){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'SELECT u.id as `id`
                 FROM users u 
                 WHERE u.login=?'
@@ -262,7 +264,7 @@
         }
 
         public function getLoginById(){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'SELECT `login` FROM `users` WHERE `id` = ?'
             );
             $stmt->execute([$this->id]);
@@ -275,7 +277,7 @@
         }
 
         public function getFollowers(int $id = NULL){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 "SELECT COUNT('id_following') as `followers` FROM `follows` 
                 WHERE `id_followed`=?"
             );
@@ -285,7 +287,7 @@
         }
 
         public function getFollowings(int $id = NULL){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 "SELECT COUNT('id_followers') as `followings` FROM `follows` 
                 WHERE `id_following`=?"
             );
@@ -295,8 +297,8 @@
         }
 
         public function getConversations(int $range){
-            parent::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
-            $stmt = parent::$db->prepare(
+            self::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, false );
+            $stmt = self::$db->prepare(
                 'SELECT `id_sender`, `id_receiver`, `content`, `date`, `conversation`, `emoji`, `status` 
                 FROM messages 
                 WHERE id IN
@@ -307,12 +309,12 @@
                 LIMIT :offset,10'
             );
             $stmt->execute([':id' => $this->id, ':offset' => $range]);
-            parent::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, true );
+            self::$db->setAttribute( PDO::ATTR_EMULATE_PREPARES, true );
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function isFollowing(int $id_user2){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'SELECT f.id FROM follows f 
                 INNER JOIN users u ON u.id=f.id_following 
                 WHERE f.id_following = ? AND f.id_followed = ?'
@@ -326,43 +328,38 @@
         }
 
         public function follow(int $id_user2){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'INSERT INTO follows (id_following, id_followed, date) 
                 VALUES (?,?, DATE(NOW()) )');
             $stmt->execute([$this->id, $id_user2]);
         }
 
         public function unfollow(int $id_user2){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'DELETE FROM follows 
                 WHERE id_followed = ? AND id_following = ?');
             $stmt->execute([$id_user2, $this->id]);
         }
 
-        public function setProfilePicture(string $path){
-            $stmt = parent::$db->prepare(
-                'UPDATE user_settings AS s 
+        public function setProfile(string $item, string $path){
+            self::deletePrevious($item);
+            $item = 's.' . $item;
+            $stmt = self::$db->prepare(
+                "UPDATE user_settings AS s 
                 INNER JOIN users AS u ON u.id_settings = s.id 
-                SET s.picture = ? 
-                WHERE u.login = ?'
+                SET $item = ? 
+                WHERE u.login = ?"
             );
             $stmt->execute([$path, $this->login]);
             $this->getSettings();
         }
 
-        public function setProfileBackground(string $path){
-            $stmt = parent::$db->prepare(
-                'UPDATE user_settings AS s 
-                INNER JOIN users AS u ON u.id_settings = s.id 
-                SET s.background = ? 
-                WHERE u.login = ?'
-            );
-            $stmt->execute([$path, $this->login]);
-            $this->getSettings();
+        protected function deletePrevious(string $item){
+            is_file(ROOT . $this->$item) ? unlink(ROOT . $this->$item) : null;
         }
 
         public function setNewPassword(string $password){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 'UPDATE users SET `password` = ? WHERE `id` = ?'
             );
             $stmt->execute([password_hash($password, PASSWORD_DEFAULT), $this->id]);
@@ -377,7 +374,7 @@
 
         protected function updateHis(string $key, $value){
             $column = 'i.' . $key;
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 "UPDATE user_informations AS i 
                 INNER JOIN users AS u ON u.id_informations = i.id 
                 SET $column = ? 
@@ -392,7 +389,7 @@
             $this->mail = $new_mail;
             $this->login = null;
             if(self::exists()==false){
-                $stmt = parent::$db->prepare(
+                $stmt = self::$db->prepare(
                     'UPDATE mails as m 
                     INNER JOIN users as u 
                     ON u.id_mail = m.id 
@@ -411,7 +408,7 @@
         }
 
         public function deleteAccount(){
-            $stmt = parent::$db->prepare(
+            $stmt = self::$db->prepare(
                 "DELETE FROM `mails` 
                 WHERE `address` = ?;
                 DELETE FROM `users` 

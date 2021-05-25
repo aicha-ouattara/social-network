@@ -37,7 +37,7 @@ class Settings extends View{
                             if(move_uploaded_file($temp_path, $path)){
                                 $path_split = explode("storage", $path);
                                 $dbpath = 'storage' . $path_split[1];
-                                $user->setProfilePicture($dbpath);
+                                $user->setProfile('picture', $dbpath);
                                 $settings_return = "Votre image a bien été téléchargée.";
                             }
                             else $settings_return = "Une erreur est survenue pendant le transfert du fichier. Veuillez réessayer.";
@@ -60,7 +60,7 @@ class Settings extends View{
                             if(move_uploaded_file($temp_path, $path)){
                                 $path_split = explode("storage", $path);
                                 $dbpath = 'storage' . $path_split[1];
-                                $user->setProfileBackground($dbpath);
+                                $user->setProfile('background', $dbpath);
                                 $settings_return = "Votre image a bien été téléchargée.";
                             }
                             else $settings_return = "Une erreur est survenue pendant le transfert du fichier. Veuillez réessayer.";
