@@ -18,13 +18,16 @@ class Messages extends View{
         else{
             if(!isset($_GET['conversation']) || $_GET['conversation']==NULL){
                 $conversations = $user->getConversations(0);
+                $_SESSION['messages_limit'] = 10;
                 include VIEW . 'user/messages.php';
             }
             else{
                 $conversation = new Chat($_GET['conversation']);
                 if($conversation->verifyAccess($user->getHis('id'))){
-                    $messages = $conversation->getMessages();
+                    $_SESSION['messages_limit'] = !isset($_SESSION['messages_limit']) || $_SESSION['messages_limit'] < 10 ? 10 : $_SESSION['messages_limit'];
+                    $messages = $conversation->getMessages($_SESSION['messages_limit']);
                     include VIEW . 'user/conversation.php';
+                    $this->jsList[] = 'conversation.js';
                 }
                 else header('Location:' . URL);
             }

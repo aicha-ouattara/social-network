@@ -1,9 +1,5 @@
 <?php
 
-
-/**
- * Comme un gabarit de page, grâce à cette class mère, on va pouvoir générer le head, header & footer sur n'importe quel controlleur enfant
- */
 class View
 {
 	protected $pageTitle;

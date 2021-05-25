@@ -18,9 +18,17 @@
             else return 1;
         }
 
-        public function getMessages(){
+        public function getMessages(int $limit){
             $stmt = self::$db->prepare(
-                'SELECT
+                "SELECT COUNT(`conversation`) as `counter` 
+                FROM `messages` 
+                WHERE `conversation` = ?"
+            );
+            $stmt->execute([$this->conversation]);
+            $total = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $stmt = self::$db->prepare(
+                "SELECT
                 s.login sender, r.login receiver, 
                 m.id, m.id_sender, m.id_receiver, m.date, m.content, m.conversation, m.emoji, m.status 
                 FROM
@@ -31,10 +39,14 @@
                 LEFT JOIN
                     users r ON
                     m.id_receiver = r.id
-                WHERE m.conversation = ?'
+                WHERE m.conversation = ? 
+                ORDER BY m.date DESC
+                LIMIT $limit"
             );
             $stmt->execute([$this->conversation]);
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = array_reverse($results);
+            $results['total'] = $total['counter'];
             return $results;
         }
     }
