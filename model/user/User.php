@@ -354,6 +354,17 @@
             $this->getSettings();
         }
 
+        public function deleteImage(string $image){
+            $stmt = self::$db->prepare(
+                "UPDATE`user_settings` 
+                SET $image = 0
+                WHERE $image = ?"
+            );
+            $stmt->execute([$this->$image]);
+            self::deletePrevious($image);
+            $this->$image = 0;
+        }
+
         protected function deletePrevious(string $item){
             is_file(ROOT . $this->$item) ? unlink(ROOT . $this->$item) : null;
         }

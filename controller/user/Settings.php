@@ -69,6 +69,11 @@ class Settings extends View{
                     }
                     else $settings_return = "Le fichier est trop volumineux. La taille maximale est de 2mo.";
                 }
+                // Else if the user is deleting his profile picture or background
+                else if(isset($_POST['delete_background']) && $_POST['delete_background'] == 1 || isset($_POST['delete_picture']) && $_POST['delete_picture'] == 1){
+                    $image = str_replace('delete_', '', key($_POST));
+                    $user->deleteImage($image);
+                }
                 // Else if the user is modifying his password
                 else if(isset($_POST['modify_password']) && $_POST['modify_password']){
                     $reflection = new ReflectionClass('Register');

@@ -7,7 +7,11 @@
     <?php } 
     else{ ?>
         <img src ="<?= 'http://localhost/social-network/' . $user->getHis('picture');?>" style="width:250px;" alt="profile_picture">
-        <h3>Modifier mon image</h3>      
+        <h3>Modifier mon image</h3>
+        <form method="post" action="settings">
+            <input type="hidden" name="delete_picture" value="1">
+            <button id="delete_picture_button">Supprimer l'image</button>
+        </form> 
     <?php }?>
         <form method="post" action="settings" enctype="multipart/form-data">  
             <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
@@ -21,6 +25,10 @@
     else{ ?>
         <img src ="<?= 'http://localhost/social-network/' . $user->getHis('background');?>" style="width:250px;" alt="profile_background">
         <h3>Modifier mon arrière plan</h3>
+        <form method="post" action="settings">
+            <input type="hidden" name="delete_background" value="1">
+            <button id="delete_background_button">Supprimer l'image</button>
+        </form>
     <?php } ?>
     <form method="post" action="settings" enctype="multipart/form-data">
         <input type="file" name="profile_background" id="profile_background" accept="image/*">

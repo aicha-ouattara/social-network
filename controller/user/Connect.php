@@ -11,6 +11,7 @@ class Connect extends View{
 	{
         require VIEW . 'elements/session.php';
 
+        ob_start();
         if(isset($authorize) && $authorize==1){
            $connect_return = "Vous êtes déjà connecté.";
         }
@@ -52,7 +53,7 @@ class Connect extends View{
         }
 
         include './view/user/connect.php';
-        $this->main[] = '';
+        $this->main[] = ob_get_clean();
 
         $this->render();
     }
