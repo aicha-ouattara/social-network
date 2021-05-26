@@ -1,3 +1,4 @@
+
 <h2>Ajouter un Post</h2>
 <form action="addPost" method="post" enctype="multipart/form-data">
 	<label for="category">Catégorie</label>
