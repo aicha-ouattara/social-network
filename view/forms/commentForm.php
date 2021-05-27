@@ -1,4 +1,4 @@
-<h2>Ajouter un Commentaire !</h2>
+<h2>Gérer les Commentaire (Ajout/suppression/modif)</h2>
 
 <form action="comments" method="post">
 	<label for="action">Action</label>
@@ -6,6 +6,7 @@
 		<option value="new">Nouveau commentaire</option>
 		<option value="delete">Supprimer commentaire</option>
 		<option value="modify">Modifier un commentaire</option>
+		<option value="respond">Répondre à un commentaire</option>
 	</select>
 	<br>
 	<label for="comment_id">Comment Id (pour "delete ou modif")</label>

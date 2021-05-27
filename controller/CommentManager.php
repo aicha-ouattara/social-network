@@ -5,34 +5,30 @@
  */
 class CommentManager
 {
-	private $id;
-	private $action;
-	private $user_id;
-	private $post_id;
-	private $mother_id;
-	private $content;
-
+	private $comment;
 
 	function __construct()
 	{
+		// need to check the user rights
+		// And save his id in $this->user_id
+
 		// We need an action
 		if (isset($_POST['action'])) {
+			//Creation of a comment instance
+			$this->comment = $this->getData();
 
-			// need to check the user rights
-
-			// Data protection
-			$this->getData();
-
-			$model = new Comment();
 			switch ($_POST['action']) {
 				case "new":
-					$model->addComment($this->user_id, $this->post_id, $this->content);
+					$this->comment->addComment();
 					die;
 				case "delete":
-					$model->removeComment($this->id);
+					$this->comment->removeComment();
 					die;
 				case "modify":
-					$model->modifyComment($this->id, $this->content);
+					$this->comment->modifyComment();
+					die;
+				case "respond":
+					$this->comment->addChildComment();
 					die;
 				default:
 					new JsonResponse(400, "Wrong action asked");
@@ -46,7 +42,13 @@ class CommentManager
 
 	public function getData()
 	{
-		if (isset($_POST['comment_id'])) {$this->id = intval($_POST['comment_id']);}
+		$model = new Comment();
+		if (isset($_POST['comment_id'])) {$model->setId($_POST['comment_id']);}
+		if (isset($_POST['user_id'])) {$model->setUserId($_POST['user_id']);}
+		if (isset($_POST['post_id'])) {$model->setPostId($_POST['post_id']);}
+		if (isset($_POST['mother_id'])) {$model->setMotherId($_POST['mother_id']);}
+		if (isset($_POST['content'])) {$model->setContent($_POST['content']);}
+		return $model;
 	}
 
 

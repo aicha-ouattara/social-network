@@ -25,11 +25,11 @@ class Test extends View
 		$this->main[] = ob_get_clean();
 
 		ob_start();
-		include(VIEW.'forms/addLikeForm.php');
+		include(VIEW.'forms/likeForm.php');
 		$this->main[] = ob_get_clean();
 
 		ob_start();
-		include(VIEW.'forms/addCommentForm.php');
+		include(VIEW.'forms/commentForm.php');
 		$this->main[] = ob_get_clean();
 
 		//On rend directement la page avec la méthode "render"
