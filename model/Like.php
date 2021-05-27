@@ -38,14 +38,14 @@ class Like extends Request
 		// Or We create a new like
 		else {
 			$this->connectdb();
-			$query = $this->pdo->prepare("INSERT INTO post_likes (user_id, post_id) VALUES (:user_id , :post_id)");
+			$query = $this->pdo->prepare("INSERT INTO post_likes (id_user, id_post) VALUES (:user_id , :post_id)");
 			$query->execute(["user_id" => $user_id, "post_id" => $post_id]);
 			$this->dbclose();
 		}
 	}
 	public function likeExists($user_id, $post_id){
 		$this->connectdb();
-		$query = $this->pdo->prepare("SELECT * from post_likes WHERE user_id = :user_id AND post_id = :post_id");
+		$query = $this->pdo->prepare("SELECT * from post_likes WHERE id_user = :user_id AND id_post = :post_id");
 		$query->execute(["user_id" => $user_id, "post_id" => $post_id]);
 		$res=$query->fetchAll(PDO::FETCH_ASSOC);
 		$this->dbclose();
@@ -58,7 +58,7 @@ class Like extends Request
 
 	public function getAllUserLikes($user_id){
 		$this->connectdb();
-		$query = $this->pdo->prepare("SELECT * from post_likes WHERE user_id = :user_id");
+		$query = $this->pdo->prepare("SELECT * from post_likes WHERE id_user = :user_id");
 		$query->execute(["user_id" => $user_id]);
 		$res=$query->fetchAll(PDO::FETCH_ASSOC);
 		$this->dbclose();
@@ -76,7 +76,7 @@ class Like extends Request
 
 	public function getAllPostLikes($post_id){
 		$this->connectdb();
-		$query = $this->pdo->prepare("SELECT * from post_likes WHERE post_id = :post_id");
+		$query = $this->pdo->prepare("SELECT * from post_likes WHERE id_post = :post_id");
 		$query->execute(["post_id" => $post_id]);
 		$res=$query->fetchAll(PDO::FETCH_ASSOC);
 		$this->dbclose();

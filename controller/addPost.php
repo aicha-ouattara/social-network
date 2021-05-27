@@ -99,7 +99,7 @@ class addPost
 		$date = $date->format('Y-m-d h:i:s');
 
 		$model = new Post();
-		$model->setUserId(2);
+		$model->setUserId(36);
 		$model->setCategoryId(intval($this->categoryId));
 		$model->setPath($this->imagePath);
 		$model->setDate($date);

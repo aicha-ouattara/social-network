@@ -28,9 +28,6 @@ class Test extends View
 		include(VIEW.'forms/addLikeForm.php');
 		$this->main[] = ob_get_clean();
 
-		// $model = new Like();
-		// var_dump($model->getAllUserLikes(2));
-
 		ob_start();
 		include(VIEW.'forms/addCommentForm.php');
 		$this->main[] = ob_get_clean();

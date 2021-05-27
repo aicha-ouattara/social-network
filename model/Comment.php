@@ -6,6 +6,7 @@ class Comment extends Request
 	private $id_post;
 	private $id_user;
 	private $content;
+	private $mother_id;
 
 
 	function __construct($tab = null)
@@ -16,6 +17,7 @@ class Comment extends Request
 			$this->id_post	= $tab['id_post'];
 			$this->id_user	= $tab['id_user'];
 			$this->content	= $tab['content'];
+			$this->$mother_id = $tab['id_comment'];
 		}
 	}
 
@@ -23,10 +25,13 @@ class Comment extends Request
 	public function getUserId(){return $this->id_user;}
 	public function getPostId(){return $this->id_post;}
 	public function getContent(){return $this->content;}
+	public function getMotherId(){return $this->mother_id;}
 
 
 	public function setUserId($id){$this->id_user = $id;}
 	public function setPostId($id){$this->id_post = $id;}
+	public function setMotherId($id){$this->mother_id = $id;}
+
 
 	public function addComment($user_id, $post_id, $content){
 		if ($content != '') {
@@ -39,18 +44,30 @@ class Comment extends Request
 			} catch (Exception $e) {
 				echo 'Exception reçue : ',  $e->getMessage(), "\n";
 			}
-
-
 		}
 	}
 
-	// if ($id = $this->likeExists($user_id, $post_id)) {
-	// 	$this->connectdb();
-	// 	$query = $this->pdo->prepare("DELETE from post_likes WHERE id = :id");
-	// 	$query->execute(["id" => $id]);
-	// 	$this->dbclose();
-	// }
+	public function addChildComment($user_id, $post_id, $mother_id, $content){
+		if ($content != '') {
+			$content = htmlspecialchars($content);
+			try {
+				$this->connectdb();
+				$query = $this->pdo->prepare("INSERT INTO comments (id_post, id_user, id_comment, content) VALUES (:id_post, :id_user , :id_comment, :content)");
+				$query->execute(["id_post" => $post_id, "id_user" => $user_id, "id_comment"=> $mother_id, "content" => $content]);
+				$this->dbclose();
+			} catch (Exception $e) {
+				echo 'Exception reçue : ',  $e->getMessage(), "\n";
+			}
+		}
+	}
 
+	public function removeComment($id)
+	{
+		$this->connectdb();
+		$query = $this->pdo->prepare("DELETE FROM comments WHERE id = :id");
+		$query->execute(["id"=> $id]);
+		$this->dbclose();
+	}
 
 	public function getAllUserComments($user_id){
 		$this->connectdb();

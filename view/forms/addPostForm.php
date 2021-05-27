@@ -4,7 +4,7 @@
 	<select name="category">
 		<option value="">--Choisir une catégorie--</option>
 		<?php foreach ($categories as $cat): ?>
-			<option value="<?= $cat['id'] ?>"><?= $cat['name'] ?></option>
+			<option value="<?= $cat['id'] ?>"><?= $cat['category'] ?></option>
 		<?php endforeach; ?>
 	</select>
 
