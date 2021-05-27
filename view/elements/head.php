@@ -14,6 +14,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://kit.fontawesome.com/9ddb75d515.js" crossorigin="anonymous"></script>
 		<script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
+		<script src="/social-network/assets/js/client.js"></script>
 		<title><?=$this->pageTitle;?></title>
 	</head>
 	<body>

@@ -23,30 +23,6 @@ class Home extends View
 
 		$this->main[] = "une autre rurbrique";
 
-		ob_start();
-		include(VIEW.'test.php');
-		$this->main[] = ob_get_clean();
-
-		ob_start();
-		include(VIEW.'test.php');
-		$this->main[] = ob_get_clean();
-		ob_start();
-		include(VIEW.'test.php');
-		$this->main[] = ob_get_clean();
-		ob_start();
-		include(VIEW.'test.php');
-		$this->main[] = ob_get_clean();
-		ob_start();
-		include(VIEW.'test.php');
-		$this->main[] = ob_get_clean();
-		ob_start();
-		include(VIEW.'test.php');
-		$this->main[] = ob_get_clean();
-		ob_start();
-		include(VIEW.'test.php');
-		$this->main[] = ob_get_clean();
-		
-
 		//On rend directement la page avec la méthode "render"
 		$this->render();
 	}
