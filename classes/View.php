@@ -6,55 +6,62 @@
  */
 class View
 {
-	// Pour le HEAD
-	// private $pageTitle = "Gabarit";
-	private $cssList = [];
-	private $jsList = [];
+    protected $pageTitle;
+    public $cssList = [];
+    public $jsList = [];
+
+    function __construct()
+    {
+
+    }
+
+    public function getHTMLHead()
+    {
+        ob_start();
+        include(VIEW.'elements/head.php');
+        $this->head = ob_get_clean();
+    }
+
+    public function getHTMLHeader()
+    {
+        ob_start();
+        include(VIEW.'elements/header.php');
+        $this->header = ob_get_clean();
+    }
+
+    public function getHTMLFooter()
+    {
+        ob_start();
+        include(VIEW.'elements/footer.php');
+        $this->footer = ob_get_clean();
+    }
+
+    public function getSession()
+    {
+        ob_start();
+        require VIEW . 'elements/session.php';
+    }
 
 
 
+    public function render()
+    {
+        // var_dump($this->jsList);
+        $this->jsList = array_unique ( $this->jsList , SORT_STRING );
+        $this->cssList = array_unique ( $this->cssList , SORT_STRING );
+        $this->getHTMLHeader();
 
-
-	function __construct()
-	{
-
-	}
-
-	public function getHTMLHead()
-	{
-		ob_start();
-		include(VIEW.'elements/head.php');
-		$this->head = ob_get_clean();
-	}
-
-	public function getHTMLHeader()
-	{
-		ob_start();
-		include(VIEW.'elements/header.php');
-		$this->header = ob_get_clean();
-	}
-
-	public function getHTMLFooter()
-	{
-		ob_start();
-		include(VIEW.'elements/footer.php');
-		$this->footer = ob_get_clean();
-	}
-
-
-
-	public function render()
-	{
-		$this->getHTMLHead();
-		$this->getHTMLHeader();
-		$this->getHTMLFooter();
-		echo $this->head;
-		echo $this->header;
-		foreach ($this->main as $content){
-			echo $content;
-		}
-		echo $this->footer;
-	}
+        // $this->getSession();
+        // Generate the head and footer after everything (to link each css / js module)
+        $this->getHTMLHead();
+        $this->getHTMLFooter();
+        echo $this->head;
+        echo $this->header;
+        foreach ($this->main as $content){
+            echo $content;
+        }
+        echo $this->footer;
+    }
 
 
 }

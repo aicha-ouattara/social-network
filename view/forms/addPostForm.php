@@ -1,11 +1,13 @@
 
+<?php $this->cssList[] = 'test.css' ?>
+<?php $this->jsList[] = 'test.js' ?>
 <h2>Ajouter un Post</h2>
 <form action="addPost" method="post" enctype="multipart/form-data">
 	<label for="category">Catégorie</label>
 	<select name="category">
 		<option value="">--Choisir une catégorie--</option>
 		<?php foreach ($categories as $cat): ?>
-			<option value="<?= $cat['id'] ?>"><?= $cat['name'] ?></option>
+			<option value="<?= $cat['id'] ?>"><?= $cat['category'] ?></option>
 		<?php endforeach; ?>
 	</select>
 
