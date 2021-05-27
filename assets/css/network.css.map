@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "network.scss"
-    ],
-    "names": [],
-    "file": "network.css"
-}
+{"version":3,"sourceRoot":"","sources":["network.scss"],"names":[],"mappings":"AAAQ","file":"network.css"}

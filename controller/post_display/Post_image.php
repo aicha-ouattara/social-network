@@ -19,7 +19,7 @@ class Post_image extends View
         // Cela va nous permettre de travailler par petits modules qu'on pourrait répéter ailleurs
 
         ob_start();
-        include(VIEW . 'post_display/post_image.php');
+        include(VIEW . 'forms/addPostForm.php');
         $this->main[] = ob_get_clean();
 
         //On rend directement la page avec la méthode "render"
