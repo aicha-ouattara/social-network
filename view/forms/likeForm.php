@@ -1,4 +1,4 @@
-<h2>Liker un Post !</h2>
+<h2>Liker un Post (si déjà liké => unlike)</h2>
 
 <form action="likes" method="post">
 	<label for="user_id">User Id</label>

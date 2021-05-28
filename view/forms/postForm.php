@@ -1,8 +1,24 @@
-<h2>Ajouter un Post</h2>
-<form action="addPost" method="post" enctype="multipart/form-data">
+<h2>Gérer un Post</h2>
+
+<form action="post" method="post" enctype="multipart/form-data">
+
+	<label for="action">Action</label>
+	<select name="action">
+		<option value="new">Nouveau post</option>
+		<option value="delete">Supprimer un post</option>
+		<option value="modify">Modifier un post</option>
+	</select>
+	<br>
+	<label for="post_id">Id du post (pour modif ou suppression)</label>
+	<input type="number" name="post_id">
+	<br>
+
+	<label for="user_id">User Id (pour nouveau)</label>
+	<input type="number" name="user_id">
+	<br>
+
 	<label for="category">Catégorie</label>
 	<select name="category">
-		<option value="">--Choisir une catégorie--</option>
 		<?php foreach ($categories as $cat): ?>
 			<option value="<?= $cat['id'] ?>"><?= $cat['category'] ?></option>
 		<?php endforeach; ?>

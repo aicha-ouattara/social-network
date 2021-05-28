@@ -11,7 +11,7 @@ class Routeur
 		"home"				=> 'Home',
 		"friends"			=> 'Friends',
 		"test"				=> 'Test',
-		"addPost"			=> 'AddPost',
+		"post"				=> 'PostManager',
 		"likes"				=> 'LikeManager',
 		"comments"			=> 'CommentManager',
 	];
