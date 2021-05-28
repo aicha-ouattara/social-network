@@ -23,5 +23,6 @@
 	<br>
 	<label for="content">Commentaire (pour nouveau ou modif)</label>
 	<input type="text" name="content">
+	<br>
 	<input type="submit" name="submit" value="Valider">
 </form>

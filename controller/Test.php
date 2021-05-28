@@ -31,6 +31,10 @@ class Test extends View
 		include(VIEW.'forms/commentForm.php');
 		$this->main[] = ob_get_clean();
 
+		ob_start();
+		include(VIEW.'forms/postReactionForm.php');
+		$this->main[] = ob_get_clean();
+
 		//On rend directement la page avec la méthode "render"
 		$this->render();
 	}

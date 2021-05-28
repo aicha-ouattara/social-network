@@ -63,7 +63,7 @@
 
 	<br>
 
-	<input type="submit" name="submit" value="submit">Valider</button>
+	<input type="submit" name="submit" value="Valider">
 
 
 

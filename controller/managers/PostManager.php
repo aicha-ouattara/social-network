@@ -5,12 +5,12 @@
  */
 class PostManager
 {
-	private $categoryId;
-	private $imagePath;
-	private $question;
-	private $answer1;
-	private $answer2;
-	private $hashtag_ids;
+	// private $categoryId;
+	// private $imagePath;
+	// private $question;
+	// private $answer1;
+	// private $answer2;
+	// private $hashtag_ids;
 
 	// A post instance to play with
 	private $post;
@@ -30,13 +30,12 @@ class PostManager
 
 		if(isset($_POST["action"])) {
 			switch ($_POST['action']) {
+
 				case "new":
 					if ($this->post->checkDataForNew() == true) {
 						$date = new DateTime();
 						$date = $date->format('Y-m-d h:i:s');
 						$this->post->setDate($date);
-						// echo "<pre>";
-						// var_dump($this->hashtags);
 						// We add the post in db
 						$post_id = $this->post->addPost();
 						foreach ($this->hashtags as $hashtag) {
@@ -55,17 +54,14 @@ class PostManager
 					}
 					new JsonResponse(200, "post deleted");
 					die;
+
 				case "modify":
 					// We modify the post
 					if ($id = $this->post->getId()) {
 						// deletion of every hashtag only relative to this post
 						$model = new hashtag();
 						$model->removePostHashtags($id);
-						echo"<pre>";
-						var_dump($this->post);
 						$this->post->modifyPost();
-
-
 						foreach ($this->hashtags as $hashtag) {
 							$hashtag->addPostHashtags($id);
 						}
@@ -74,21 +70,14 @@ class PostManager
 					// if needed we modify the hashtags
 					new JsonResponse(200, "post modified");
 					die;
+
 				default:
 					new JsonResponse(400, "Wrong action asked");
 					die;
 			}
-			// //get the data and protects
-			// $hashtag_ids = $this->getData();
-			// // if no json error occured -> we add the post in database
-			// $postId = $this->addInDb();
-			// // then we link post hashtags in post_hashtags table
-			// $this->linkPostHashtags($postId, $hashtag_ids);
-			// If no error occured, return success
-			new JsonResponse(200, "Post saved");
 		}
 		else {
-			new JsonResponse(400, "Aucune action demandée");
+			new JsonResponse(400, "No action asked");
 			die;
 		}
 	}
@@ -154,72 +143,72 @@ class PostManager
 		}
 	}
 
-	private function checkChoice($choice){
-		if (trim($choice) == '') {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-
-
-	private function addHashtags($data){
-		$hashtags = explode(' ', $data);
-		if (($key = array_search('', $hashtags)) !== false) {
-			unset($hashtags[$key]);
-		}
-		$model = new Hashtag();
-		$ids = $model->addPostHashtags($hashtags);
-		return $ids;
-	}
-
-	private function addInDb(){
-		$date = new DateTime();
-		$date = $date->format('Y-m-d h:i:s');
-
-		$model = new Post();
-		$model->setUserId(36);
-		$model->setCategoryId(intval($this->categoryId));
-		$model->setPath($this->imagePath);
-		$model->setDate($date);
-		$model->setQuestion($this->question);
-		$model->setChoice1($this->answer1);
-		$model->setChoice2($this->answer2);
-
-		$id = $model->addPostInDb();
-		return ($id);
-		//var_dump($model->getPostsFromUserId(2));
-	}
-
-	public function linkPostHashtags($postId, $hashtag_ids){
-		$model = new Hashtag();
-		foreach ($hashtag_ids as $hash_id) {
-			$model->linkHashtagToPost($postId, $hash_id);
-		}
-	}
-
-	private function getData(){
-		// Check if image file is a actual image or fake image
-		$this->checkSource();
-		// Check if question and answers are not empty
-		if (!$this->checkChoice($_POST["question"]) || !$this->checkChoice($_POST["firstAnswer"]) || !$this->checkChoice($_POST["secondAnswer"])) {
-			new JsonResponse(406, "Un champs est vide");
-			die;
-		}
-		if (!isset($_POST['category'])) {
-			new JsonResponse(406, "Sélectionner une catégorie");
-			die;
-		}
-		// Save category id
-		$this->categoryId = $_POST['category'];
-		// Protect question and answers
-		$this->question = htmlspecialchars($_POST['question']);
-		$this->answer1 = htmlspecialchars($_POST['firstAnswer']);
-		$this->answer2 = htmlspecialchars($_POST['secondAnswer']);
-		// Link this post to hashtags (creates hashtag if not already in db)
-		$hashtag_ids = $this->addHashtags($_POST["hashtags"]);
-		return $hashtag_ids;
-	}
+	// private function checkChoice($choice){
+	// 	if (trim($choice) == '') {
+	// 		return false;
+	// 	}
+	// 	else {
+	// 		return true;
+	// 	}
+	// }
+	//
+	//
+	// private function addHashtags($data){
+	// 	$hashtags = explode(' ', $data);
+	// 	if (($key = array_search('', $hashtags)) !== false) {
+	// 		unset($hashtags[$key]);
+	// 	}
+	// 	$model = new Hashtag();
+	// 	$ids = $model->addPostHashtags($hashtags);
+	// 	return $ids;
+	// }
+	//
+	// private function addInDb(){
+	// 	$date = new DateTime();
+	// 	$date = $date->format('Y-m-d h:i:s');
+	//
+	// 	$model = new Post();
+	// 	$model->setUserId(36);
+	// 	$model->setCategoryId(intval($this->categoryId));
+	// 	$model->setPath($this->imagePath);
+	// 	$model->setDate($date);
+	// 	$model->setQuestion($this->question);
+	// 	$model->setChoice1($this->answer1);
+	// 	$model->setChoice2($this->answer2);
+	//
+	// 	$id = $model->addPostInDb();
+	// 	return ($id);
+	// 	//var_dump($model->getPostsFromUserId(2));
+	// }
+	//
+	// public function linkPostHashtags($postId, $hashtag_ids){
+	// 	$model = new Hashtag();
+	// 	foreach ($hashtag_ids as $hash_id) {
+	// 		$model->linkHashtagToPost($postId, $hash_id);
+	// 	}
+	// }
+	//
+	// private function getData(){
+	// 	// Check if image file is a actual image or fake image
+	// 	$this->checkSource();
+	// 	// Check if question and answers are not empty
+	// 	if (!$this->checkChoice($_POST["question"]) || !$this->checkChoice($_POST["firstAnswer"]) || !$this->checkChoice($_POST["secondAnswer"])) {
+	// 		new JsonResponse(406, "Un champs est vide");
+	// 		die;
+	// 	}
+	// 	if (!isset($_POST['category'])) {
+	// 		new JsonResponse(406, "Sélectionner une catégorie");
+	// 		die;
+	// 	}
+	// 	// Save category id
+	// 	$this->categoryId = $_POST['category'];
+	// 	// Protect question and answers
+	// 	$this->question = htmlspecialchars($_POST['question']);
+	// 	$this->answer1 = htmlspecialchars($_POST['firstAnswer']);
+	// 	$this->answer2 = htmlspecialchars($_POST['secondAnswer']);
+	// 	// Link this post to hashtags (creates hashtag if not already in db)
+	// 	$hashtag_ids = $this->addHashtags($_POST["hashtags"]);
+	// 	return $hashtag_ids;
+	// }
 
 }

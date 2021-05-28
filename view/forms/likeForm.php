@@ -6,5 +6,6 @@
 	<br>
 	<label for="post_id">Post Id</label>
 	<input type="number" name="post_id">
+	<br>
 	<input type="submit" name="submit" value="Valider">
 </form>

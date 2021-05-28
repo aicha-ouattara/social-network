@@ -14,6 +14,7 @@ class Routeur
 		"post"				=> 'PostManager',
 		"likes"				=> 'LikeManager',
 		"comments"			=> 'CommentManager',
+		"reaction"			=> 'PostReactionManager',
 	];
 	private 	$controller;	// Controleur sélectionné
 
