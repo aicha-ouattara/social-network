@@ -9,11 +9,12 @@ class AddPostDisplay extends View
     protected $pageTitle = "addPostDisplay";
 
     // Il faut donner la liste des css et js à lier
-    private $css = [];
-    private $js = [];
+    //private $css = [];
+    //private $js = [];
 
     function __construct()
     {
+
         // Il faut remplir la variable $main des différents contenus du main (d'où la liste)
         // Cela va nous permettre de travailler par petits modules qu'on pourrait répéter ailleurs
 

@@ -31,6 +31,7 @@ class MyAutoload
 
 		define('ASSETS', 'http://localhost/'.basename(getcwd()).'/'.'assets/');
 		define('CSS', ASSETS.'/'.'css/');
+		define('JS', ASSETS. '/'.'js/');
 	}
 
 

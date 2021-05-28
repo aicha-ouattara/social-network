@@ -8,12 +8,9 @@ class View
 {
     protected $pageTitle;
     public $cssList = [];
-    public $jsList = [];
+    protected $jsList = [];
 
-    function __construct()
-    {
 
-    }
 
     public function getHTMLHead()
     {
