@@ -12,8 +12,9 @@
 		<?php endforeach; ?>
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 		<script src="https://kit.fontawesome.com/9ddb75d515.js" crossorigin="anonymous"></script>
-		<script src="https://cdn.socket.io/3.1.3/socket.io.min.js"></script>
+		<script src="http://localhost:443/socket.io/socket.io.js"></script>
 		<script src="/social-network/assets/js/client.js"></script>
 		<title><?=$this->pageTitle;?></title>
 	</head>

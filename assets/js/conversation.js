@@ -1,4 +1,7 @@
 $(function(){
+    /**
+     * Emoji handling
+     */
     $('.received').append('<div class="emoji_spawner"><button class="emoji_button emoji_1"><i class="far fa-grin-alt"></i></button></div>')
 
     $(document).on('click', 'button.emoji_button', function(){
@@ -18,7 +21,6 @@ $(function(){
             closeEmoji(div_emoji)
         }
     })
-
     $(document).on('click', 'button.emoji_close', function(){ closeEmoji($(this).parent())})
 
     $(document).on('click', '.delete_message', function(){
@@ -41,7 +43,7 @@ function sendEmoji(message, emoji, div){
     emoji = emoji[1].replace('emoji_', '')
     $.post(
         'model/social/Message.php', 
-        {emoji, message:message, user:"<?=$user->getHis('id');?>", conversation:"<?=$message['conversation'];?>"}, 
+        {emoji, message, user, conversation}, 
         function(data){
             $("#" + div).load(location.href + " #" + div)
     })
@@ -51,7 +53,7 @@ function deleteMessage(id){
     id = id.replace('message_', '')
     $.post(
         'model/social/Message.php', 
-        {delete:1, id, user:"<?=$user->getHis('id');?>", conversation:"<?=$message['conversation'];?>"}, 
+        {delete:1, id, user, conversation}, 
         function(data){
             $('#section_messages').load(location.href + ' #section_messages')
     })

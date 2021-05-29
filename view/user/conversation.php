@@ -1,17 +1,18 @@
 <?php
-    /**
-     * Define emojis
-     */
+    // Define emojis
     $emoji_0 = null;
     $emoji_1 = '<i class="far fa-grin-alt"></i>';
     $emoji_2 = '<i class="far fa-grin-squint"></i>';
     $emoji_3 = '<i class="far fa-grin-hearts"></i>';
     $emoji_4 = '<i class="far fa-grin-beam-sweat"></i>';
     $emoji_5 = '<i class="far fa-sad-tear"></i>';
+
+    // Define partner
+    $id_partner = $user->getHis('id') == $messages[0]['id_receiver'] ? $messages[0]['id_sender'] : $messages[0]['id_receiver'];
 ?>
 
 <section id="section_messages">
-    <?php if($messages['total'] > $_SESSION['messages_limit']){ ?>
+    <?php if($messages['total'] > $_SESSION['messages_limit']){?>
         <button id="more_messages">Afficher les messages plus anciens</button>
     <?php } 
     foreach($messages as $key => $message){
@@ -39,3 +40,9 @@
         text-align:end;
     }
 </style>
+
+<script>
+    conversation = "<?=$messages[0]['conversation'];?>"
+    user = "<?=$user->getHis('id');?>"
+    partner = "<?=$id_partner;?>"
+</script>
