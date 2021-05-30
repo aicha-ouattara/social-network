@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-users=[]
+users = {}
 prevent = false
 
 const io = require("socket.io")(server, {
@@ -15,29 +15,29 @@ const io = require("socket.io")(server, {
 // User connected
 io.on('connection', (socket)=>{
     socket.on('authtoken', (data)=>{
-        if(users.includes(data)){
+        if(Object.values(users).indexOf(data) > -1){
             clearTimeout(discUser)
-            prevent = true
         }
         else{
-            users.splice(socket.id, 0, data)
+            users[socket.id] = data
         }
+    })
+    // User disconnected
+    socket.on('disconnect', ()=>{
+
+        // En retard de 1
+        console.log(socket.id)
+        discUser = setTimeout(() => {
+            if(socket.id in users){
+                delete users[socket.id]
+                console.log(socket.id + ' disconnected')
+            }
+        }, 3000)
     })
     // Receiving message
     socket.on('message', (message)=>{
         io.emit('newmsg', message)
     })
-    // User disconnected
-    socket.on('disconnect', ()=>{
-        discUser = setTimeout(() => {
-            if(users.indexOf(socket.id) && prevent === false){
-                users.splice(socket.id, 1)
-                console.log('disconnect ' + users)
-            }
-        }, 3000)
-        prevent = false
-    })
-    console.log('users = ' + users)
 })
 
 server.listen(443, 'localhost')
