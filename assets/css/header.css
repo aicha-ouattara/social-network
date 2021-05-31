@@ -1,203 +1,282 @@
 @import "config.css";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
-body {
-  background-color: var(--bg-color);
-  margin: 0%;
-}
-
-* {
-  font-family: "Noto Sans TC", sans-serif;
-}
-
-/*SIDE NAV*/
-.side_nav {
-  display: flex;
-  flex-direction: column;
-  width: 21%;
-  height: 96%;
-  position: fixed;
-  top: 0%;
-  margin: 1%;
-  background-color: var(--primary-color);
-  border-radius: 10px;
-}
-.side_nav button {
-  width: 100%;
-  font-size: 1em;
-  padding: 2%;
-  border: none;
-  background-color: transparent;
-  transition: 0.5s;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: var(--font-color);
-}
-.side_nav button:hover {
-  color: #8ed589;
-}
-.side_nav i {
-  margin-left: 11%;
-  margin-right: 10%;
-  padding: 4%;
-  border-radius: 50%;
-  transition: 0.5s;
-  color: white;
-}
-
-.fa-home {
-  background-color: var(--home);
-}
-
-.fa-hashtag {
-  background-color: var(--abo);
-}
-
-.fa-search {
-  background-color: var(--explore);
-}
-
-.fa-star {
-  background-color: var(--popular);
-}
-
-.fa-sign-out-alt {
-  background-color: red;
-}
-
-.logout_button {
-  margin-top: 60%;
-}
-
-.nav_profile {
-  height: 20%;
-  display: flex;
-}
-
-.user_nav {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  clip-path: circle(47% at 50% 50%);
-  width: 80%;
-  /*margin-left: 10%;*/
-  z-index: 11;
-}
-
-.name_nav {
-  font-size: 0.5em;
-}
-
-.container_name_nav {
-  width: 50%;
-}
-
-.container_imgUser {
-  width: 20%;
-  height: 36px;
-  background-color: #fce556;
-  padding: 3px;
-  border-radius: 50%;
-  margin-left: 1%;
-}
-
-.logo {
-  margin-top: 10%;
-  margin-bottom: 10%;
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  width: 80%;
-}
-
-.link_sidenav {
-  background-color: #e684af;
-  width: 20%;
-}
-
-/*.fa-home{*/
-/*    background-color: #e684af;*/
-/*}*/
-/*SEARCH*/
-.container_search {
-  width: 60%;
-}
-
-.search {
-  text-align: center;
-  border: none;
-  background-color: var(--bg-color);
-  border-radius: 10px;
-  /*border-bottom: 2px solid #8f8f8f;*/
-  height: 33px;
-  width: 70%;
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  color: var(--font-color);
-  /*background-color: transparent;*/
-}
-
-.search:focus {
-  outline: none;
-}
-
-.nav_search {
-  width: 76%;
-  height: 70px;
-  margin: 1%;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  position: fixed;
-  left: 22%;
-  background-color: var(--primary-color);
-}
-
-input[type=search] {
-  background: var(--bg-color) url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
-}
-
-.nav_search i {
-  /*padding: 0%;*/
-  font-size: 25px;
-  border-radius: 50%;
-  padding: 20%;
-  transition: 0.5s;
-  color: #bebebe;
-}
-
-.nav_search button {
-  font-size: 1em;
-  /*padding: 50px;*/
-  border: none;
-  background-color: transparent;
-  transition: 0.5s;
-}
-
-.container_buttonProfile {
-  width: 20%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.container_bottomnav {
-  display: none;
-}
-
-.fa-cog {
-  -webkit-animation: rotation 3s infinite linear;
-}
-
-@-webkit-keyframes rotation {
-  from {
-    -webkit-transform: rotate(0deg);
+@media screen and (min-width: 1050px) {
+  body {
+    background-color: var(--bg-color);
+    margin: 0%;
   }
-  to {
-    -webkit-transform: rotate(359deg);
+
+  * {
+    font-family: "Noto Sans TC", sans-serif;
+  }
+
+  /*SIDE NAV*/
+  .side_nav {
+    display: flex;
+    flex-direction: column;
+    width: 21%;
+    height: 96%;
+    position: fixed;
+    top: 0%;
+    margin: 1%;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+  }
+  .side_nav button {
+    width: 100%;
+    font-size: 1em;
+    padding: 2%;
+    border: none;
+    background-color: transparent;
+    transition: 0.5s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--font-color);
+  }
+  .side_nav button:hover {
+    color: #8ed589;
+  }
+  .side_nav i {
+    margin-left: 11%;
+    margin-right: 10%;
+    padding: 4%;
+    border-radius: 50%;
+    transition: 0.5s;
+    color: white;
+  }
+
+  .fa-home {
+    background-color: var(--home);
+  }
+
+  .fa-hashtag {
+    background-color: var(--abo);
+  }
+
+  .fa-search {
+    background-color: var(--explore);
+  }
+
+  .fa-star {
+    background-color: var(--popular);
+  }
+
+  .fa-sign-out-alt {
+    background-color: red;
+  }
+
+  .logout_button {
+    margin-top: 60%;
+  }
+
+  .nav_profile {
+    height: 20%;
+    display: flex;
+  }
+
+  .user_nav {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    clip-path: circle(47% at 50% 50%);
+    width: 80%;
+    /*margin-left: 10%;*/
+    z-index: 11;
+  }
+
+  .name_nav {
+    font-size: 0.5em;
+  }
+
+  .container_name_nav {
+    width: 50%;
+  }
+
+  .container_imgUser {
+    width: 20%;
+    height: 36px;
+    background-color: #fce556;
+    padding: 3px;
+    border-radius: 50%;
+    margin-left: 1%;
+  }
+
+  .logo {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 80%;
+  }
+
+  .link_sidenav {
+    background-color: #e684af;
+    width: 20%;
+  }
+
+  /*.fa-home{*/
+  /*    background-color: #e684af;*/
+  /*}*/
+  /*SEARCH*/
+  .container_search {
+    width: 60%;
+  }
+
+  .search {
+    text-align: center;
+    border: none;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    /*border-bottom: 2px solid #8f8f8f;*/
+    height: 33px;
+    width: 70%;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    color: var(--font-color);
+    /*background-color: transparent;*/
+  }
+
+  .search:focus {
+    outline: none;
+  }
+
+  .nav_search {
+    width: 76%;
+    height: 70px;
+    margin: 1%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    left: 22%;
+    background-color: var(--primary-color);
+  }
+
+  input[type=search] {
+    background: var(--bg-color) url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+  }
+
+  .nav_search i {
+    /*padding: 0%;*/
+    font-size: 25px;
+    border-radius: 50%;
+    padding: 20%;
+    transition: 0.5s;
+    color: #bebebe;
+  }
+
+  .nav_search button {
+    font-size: 1em;
+    /*padding: 50px;*/
+    border: none;
+    background-color: transparent;
+    transition: 0.5s;
+  }
+
+  .container_buttonProfile {
+    width: 20%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .container_bottomnav {
+    display: none;
+  }
+
+  .fa-cog {
+    -webkit-animation: rotation 3s infinite linear;
+  }
+
+  @-webkit-keyframes rotation {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(359deg);
+    }
+  }
+}
+@media screen and (max-width: 1050px) {
+  body {
+    margin: 0%;
+  }
+
+  .main-menu {
+    display: none;
+  }
+
+  .nav_search {
+    display: none;
+  }
+
+  .side_nav {
+    display: none;
+  }
+
+  .logo {
+    width: 20%;
+    position: absolute;
+    top: 0%;
+    left: 42%;
+  }
+
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .container_bottomnav {
+    max-width: 80rem;
+    width: 100%;
+    height: auto;
+    padding: 0 2rem;
+    margin: 0 auto;
+  }
+
+  .header .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.8rem 0;
+    background-color: #252a32;
+    z-index: 99;
+    will-change: transform;
+    transform: translateZ(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
+  }
+  .header .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #f1f5f8;
+  }
+  .header .bottom-nav-link {
+    display: flex;
+    flex-direction: column;
+  }
+  .header .bottom-nav .active {
+    color: #ffef72;
+  }
+
+  .header_darkmode {
+    display: none;
   }
 }
 

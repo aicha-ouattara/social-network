@@ -63,18 +63,6 @@
 
 
 
-<!--        <button>-->
-<!--            <i class="fas fa-comment"></i> Messages-->
-<!--        </button>-->
-
-
-
-
-<!--        <div class="nav_profile">-->
-<!---->
-<!---->
-<!--            <div class="container_name_nav"><button><h1 class="name_nav">PIERRE RICHARD</h1></button></div>-->
-<!--        </div>-->
 
 
     </nav>
@@ -126,6 +114,7 @@
     </div>
 
 </header>
+
 
 
 

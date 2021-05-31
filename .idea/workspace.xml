@@ -3,16 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0ab988ae-3cc6-483c-b888-3c9988aae493" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/config.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/config.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/config.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/config.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/config.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/config.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/darkmode.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/darkmode.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/darkmode.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/darkmode.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/darkmode.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/darkmode.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/header.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header.css.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/header.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/elements/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/elements/footer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/elements/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/view/elements/header.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +27,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TestSocialNetwork" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -48,7 +41,9 @@
       <option name="presentableId" value="Default" />
       <updated>1621425935698</updated>
       <workItem from="1621425936922" duration="6569000" />
-      <workItem from="1621494019168" duration="19831000" />
+      <workItem from="1621494019168" duration="20209000" />
+      <workItem from="1622446101463" duration="27000" />
+      <workItem from="1622452295958" duration="2813000" />
     </task>
     <servers />
   </component>
@@ -60,6 +55,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="306" y="121" key="EditFileWatcherDialog/0.0.1280.680@0.0.1280.680" timestamp="1621504993963" />
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1622453847528">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1622453847528" />
     <state x="149" y="0" key="SettingsEditor" timestamp="1621504986391">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
