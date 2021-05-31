@@ -18,6 +18,12 @@ class Routeur
 		"informations"		=> 'Informations',
 		"messages"			=> 'Messages',
 		"delete"			=> 'Delete'
+		"friends"			=> 'Friends',
+		"test"				=> 'Test',
+		"post"				=> 'PostManager',
+		"likes"				=> 'LikeManager',
+		"comments"			=> 'CommentManager',
+		"reaction"			=> 'PostReactionManager',
 	];
 	private $controller;	// Controleur sélectionné
 
