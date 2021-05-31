@@ -17,7 +17,7 @@ class Routeur
 		"settings"			=> 'Settings',
 		"informations"		=> 'Informations',
 		"messages"			=> 'Messages',
-		"delete"			=> 'Delete'
+		"delete"			=> 'Delete',
 		"friends"			=> 'Friends',
 		"test"				=> 'Test',
 		"post"				=> 'PostManager',
@@ -44,7 +44,7 @@ class Routeur
 		if(key_exists($_SESSION['url'][0], $controllers))
 		{
 			$controller = $controllers[$_SESSION['url'][0]];
-			
+
 			return new $controller();
 		}
 		else {

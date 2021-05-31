@@ -19,10 +19,10 @@ class Home extends View
 
 		$this->main[] = "Bienvenue sur la page Home!<br>";
 
-		$test = 2;
-		ob_start();
-		include(VIEW.'elements/test.php');
-		$this->main[] = ob_get_clean();
+		// $test = 2;
+		// ob_start();
+		// include(VIEW.'elements/test.php');
+		// $this->main[] = ob_get_clean();
 
 		//On rend directement la page avec la méthode "render"
 		$this->render();
