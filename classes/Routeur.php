@@ -8,10 +8,18 @@ class Routeur
 {
 	// Liste des pages et de leurs controllers
 	private $controllers = [
+		""					=> 'Home',
 		"home"				=> 'Home',
-		"friends"			=> 'Friends',
+		"register"			=> 'Register',
+		"connection"		=> 'Connect',
+		"connect" 			=> 'Connect',
+		"profil"			=> 'Profile',
+		"settings"			=> 'Settings',
+		"informations"		=> 'Informations',
+		"messages"			=> 'Messages',
+		"delete"			=> 'Delete'
 	];
-	private 	$controller;	// Controleur sélectionné
+	private $controller;	// Controleur sélectionné
 
 
 	public function __construct()
@@ -30,6 +38,7 @@ class Routeur
 		if(key_exists($_SESSION['url'][0], $controllers))
 		{
 			$controller = $controllers[$_SESSION['url'][0]];
+			
 			return new $controller();
 		}
 		else {

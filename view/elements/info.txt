@@ -1,4 +1,0 @@
-Ici on va stocker tous les éléments répétitifs du site :
-	- head
-	- nav
-	- footer

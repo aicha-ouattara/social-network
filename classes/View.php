@@ -1,19 +1,10 @@
 <?php
 
-
-/**
- * Comme un gabarit de page, grâce à cette class mère, on va pouvoir générer le head, header & footer sur n'importe quel controlleur enfant
- */
 class View
 {
-	// Pour le HEAD
-	// private $pageTitle = "Gabarit";
-	private $cssList = [];
-	private $jsList = [];
-
-
-
-
+	protected $pageTitle;
+	public $cssList = [];
+	public $jsList = [];
 
 	function __construct()
 	{
@@ -41,12 +32,24 @@ class View
 		$this->footer = ob_get_clean();
 	}
 
+	public function getSession()
+	{
+		ob_start();
+		require VIEW . 'elements/session.php';
+	}
+
 
 
 	public function render()
 	{
-		$this->getHTMLHead();
+		// var_dump($this->jsList);
+		$this->jsList = array_unique ( $this->jsList , SORT_STRING );
+		$this->cssList = array_unique ( $this->cssList , SORT_STRING );
 		$this->getHTMLHeader();
+
+		// $this->getSession();
+		// Generate the head and footer after everything (to link each css / js module)
+		$this->getHTMLHead();
 		$this->getHTMLFooter();
 		echo $this->head;
 		echo $this->header;

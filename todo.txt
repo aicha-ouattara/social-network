@@ -1,0 +1,9 @@
+messagerie ( status + sockets / server ) 
+mailer
+
+
+array users connected
+
+user = {id, login, array friends}
+
+user emit to user where in array friends

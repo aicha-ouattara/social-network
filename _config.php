@@ -20,6 +20,8 @@ class MyAutoload
 		define('HOST', 'http://localhost/'.__DIR__.'/');
 		define('ROOT',  __DIR__.'/');
 
+		define('STORAGE', ROOT.'storage/');
+
 		define('CONTROLLER', ROOT.'controller/');
 		define('VIEW', ROOT.'view/');
 		define('MODEL', ROOT.'model/');
@@ -29,6 +31,7 @@ class MyAutoload
 
 		define('ASSETS', 'http://localhost/'.basename(getcwd()).'/'.'assets/');
 		define('CSS', ASSETS.'/'.'css/');
+		define('JS', ASSETS.'/'.'js/');
 	}
 
 
