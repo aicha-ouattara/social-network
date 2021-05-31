@@ -1,22 +1,27 @@
 $(function(){
+    /**
+     * Connection handling
+     */
     if(document.cookie.indexOf('authtoken') > -1 ){
         socket = io.connect('http://localhost:443')
         socket.on('connect', () =>{
-            socket.emit('authtoken', Cookies.get('authtoken'))
-            typeof Cookies.get('socketid') == 'undefined' ? Cookies.set('socketid', socket.id, { expires: 7, path: '/', secure: true, sameSite: 'strict' }) : null
-            console.log(socket.id)
-            socket.id = Cookies.get('socketid')
-            console.log(socket.id)
+            $.post(
+                'model/data/Server.php',
+                {authtoken :  Cookies.get('authtoken')},
+                function(data){
+                    socket.emit('data', data)
+                }
+            )
+            // typeof Cookies.get('socketid') == 'undefined' ? Cookies.set('socketid', socket.id, { expires: 7, path: '/', secure: true, sameSite: 'strict' }) : null
+            // socket.id = Cookies.get('socketid')
         })
         
         socket.on('newmsg', function(message){
             $('#section_messages').load(location.href + ' #section_messages')
         })
     }
-    else{
-        typeof Cookies.get('socketid') != 'undefined' ? Cookies.remove('socketid') : null
-        typeof socket != 'undefined' ? delete(socket) : null
-    }
+    else typeof socket != 'undefined' ? delete(socket) : null
+
     /**
      * Messages handling
      */
