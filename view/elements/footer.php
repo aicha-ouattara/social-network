@@ -1,10 +1,9 @@
-</main>
-<?php foreach ($this->jsList as $name): ?>
-    <script src="<?= JS.$name?>"></script>
-<?php endforeach; ?>
+	</main>
+	<?php foreach ($this->jsList as $name): ?>
+		<script src="<?= JS.$name?>"></script>
+	<?php endforeach; ?>
 
-</body>
-<footer>
-    Ceci est le footer!
-</footer>
+	</body>
+	<footer>
+	</footer>
 </html>

@@ -26,6 +26,7 @@ class AddPostDisplay extends View
         include(VIEW . 'forms/addPostForm.php');
         $this->main[] = ob_get_clean();
 
+
         //On rend directement la page avec la méthode "render"
         $this->render();
     }

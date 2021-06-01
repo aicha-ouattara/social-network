@@ -1,6 +1,6 @@
 // On va chercher les différents éléments de notre page
 const pages = document.querySelectorAll(".page")
-const header = document.querySelector("header")
+const header = document.querySelector(".header-addpost")
 const nbPages = pages.length // Nombre de pages du formulaire
 let pageActive = 1
 

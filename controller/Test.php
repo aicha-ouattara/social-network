@@ -14,15 +14,11 @@ class Test extends View
 
 	function __construct()
 	{
-		$this->main[] = "Ajouter un Post<br>";
+		$this->main[] = "";
 
 		// Données pour le formulaire d'ajout d'un post
 		$model = new Request();
 		$categories = $model->selectAll('categories');
-
-		ob_start();
-		include(VIEW.'forms/addPostForm.php');
-		$this->main[] = ob_get_clean();
 
 		ob_start();
 		include(VIEW.'forms/addLikeForm.php');
@@ -35,7 +31,12 @@ class Test extends View
 		include(VIEW.'forms/addCommentForm.php');
 		$this->main[] = ob_get_clean();
 
-		//On rend directement la page avec la méthode "render"
+        ob_start();
+        include(VIEW.'forms/addPostForm.php');
+        $this->main[] = ob_get_clean();
+
+
+        //On rend directement la page avec la méthode "render"
 		$this->render();
 	}
 }

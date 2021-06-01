@@ -1,0 +1,33 @@
+
+
+:root {
+  --bg-color: #e5e5e5;
+  --primary-color: #ffffff;
+  --secondary-color: #1B1E24;
+  --font-color: #3c3c3c;
+  --heading-color: #1B1E24;
+  --home : #FC887B;
+  --abo: #D0E6A5;
+  --explore: #89D5C9;
+  --popular: #FFDD95;
+
+
+
+
+}
+
+[data-theme="dark"] {
+  --bg-color: #1B1E24;
+  --primary-color: #323943;
+  --secondary-color: #fff;
+  --font-color: #d6d6d6;
+  --heading-color: #fff;
+  --home : #bc2b21;
+  --abo: #83c649;
+  --explore: #098080;
+  --popular: #c3aa0a;
+
+
+
+
+}

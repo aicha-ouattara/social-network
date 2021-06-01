@@ -1,0 +1,30 @@
+
+.container_darkmode{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+
+.header_darkmode{
+  position: absolute;
+  top: 34px;
+  right: 35px;
+  .moon, .sun{
+    width: 24px;
+    cursor: pointer;
+    transition: .5s all ease-in-out;
+  }
+  .sun:hover{
+    animation: sun_rotate 1s infinite;
+  }
+  .moon:hover{
+    transform: scale(1.1);
+  }
+  .hide{
+    display: none;
+  }
+}

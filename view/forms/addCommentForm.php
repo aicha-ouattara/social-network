@@ -1,6 +1,6 @@
-<h2>Ajouter un Commentaire !</h2>
 
-<form action="comments" method="post">
+
+<form action="comments" method="post" style="margin-left:25%;padding: 16px;">
 	<label for="user_id">User Id</label>
 	<input type="number" name="user_id">
 	<br>

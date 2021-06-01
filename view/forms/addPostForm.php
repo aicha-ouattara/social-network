@@ -1,8 +1,10 @@
 <?php $this->cssList[] = 'add_post.css' ?>
 <?php $this->jsList[] = 'add_post.js' ?>
 
+<div class="header-addpost">
+</div>
 
-<form action="" method="post" enctype="multipart/form-data" >
+<form action="" method="post" enctype="multipart/form-data" style="margin-left:25%;padding:100px 16px;">
     <div class="page" id="page1">
         <button class="next" id="nextButton" type="button"></button>
     </div>

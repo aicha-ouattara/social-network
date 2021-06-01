@@ -1,10 +1,10 @@
-<h2>Liker un Post !</h2>
 
-<form action="likes" method="post">
-	<label for="user_id">User Id</label>
+
+<form action="likes" method="post" style="margin-left:25%;padding:100px 16px;">
+	<label for="user_id">User like</label>
 	<input type="number" name="user_id">
 	<br>
-	<label for="post_id">Post Id</label>
+	<label for="post_id">Post like</label>
 	<input type="number" name="post_id">
 	<input type="submit" name="submit" value="Valider">
 </form>
