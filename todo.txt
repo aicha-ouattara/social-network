@@ -2,8 +2,8 @@ messagerie ( status + sockets / server )
 mailer
 
 
-array users connected
+X array users connected
 
-user = {id, login, array friends}
+X user = {id, login, array friends}
 
 user emit to user where in array friends
