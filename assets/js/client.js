@@ -20,7 +20,7 @@ $(function(){
             $('#section_messages').load(location.href + ' #section_messages')
         })
     }
-    else typeof socket != 'undefined' ? delete(socket) : null
+    else if(typeof socket != 'undefined') delete(socket)
 
     /**
      * Messages handling

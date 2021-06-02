@@ -35,7 +35,8 @@
          *  getRealStatus : get the actual status of an user ( active / inactive )
          *  getProfile() : get every data from table `users` 
          *  getPublicProfile() : get every data needed to show to a visitor
-         *  getFollowers() / getFollowings() : get an user's followers / followings
+         *  getFollowers() / getFollowings() : get an user's followers / followings numbers
+         *  getFollowersLogins() / getFollowingsLogins() : get an user's followers / followings logins
          *  getMessages() : get all messages sent and received
          *  isFollowing($id) : check if the user is following another user by hid $id
          *  follow($id) / unfollow(id) : make the user follow / unfollow another user by his $id
@@ -214,6 +215,33 @@
             return $this;
         }
 
+        public function getPublicProfile(&$return=NULL){
+            $stmt = self::$db->prepare(
+                'SELECT u.id as `id`, u.online as `online`
+                FROM users u 
+                WHERE u.login=?'
+            );
+            $stmt->execute([$this->login]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(empty($result)) return $return = 'no_user';
+            else{ 
+                $this->id = $result['id'];
+                self::getFollowers();
+                self::getFollowings();
+                $return = 'user_found';
+                return $this;
+            }
+        }
+
+        public function getLoginById(){
+            $stmt = self::$db->prepare(
+                'SELECT `login` FROM `users` WHERE `id` = ?'
+            );
+            $stmt->execute([$this->id]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result !== false ? $this->login = $result['login'] : $this->login = 'Utilisateur supprimé';
+        }
+
         public function getSettings(){
             $stmt = self::$db->prepare(
                 'SELECT s.picture, s.background FROM user_settings s 
@@ -245,33 +273,6 @@
             return $this;
         }
 
-        public function getPublicProfile(&$return=NULL){
-            $stmt = self::$db->prepare(
-                'SELECT u.id as `id`
-                FROM users u 
-                WHERE u.login=?'
-            );
-            $stmt->execute([$this->login]);
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            if(empty($result)) return $return = 'no_user';
-            else{ 
-                $this->id = $result['id'];
-                self::getFollowers();
-                self::getFollowings();
-                $return = 'user_found';
-                return $this;
-            }
-        }
-
-        public function getLoginById(){
-            $stmt = self::$db->prepare(
-                'SELECT `login` FROM `users` WHERE `id` = ?'
-            );
-            $stmt->execute([$this->id]);
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $result !== false ? $this->login = $result['login'] : $this->login = 'Utilisateur supprimé';
-        }
-
         public function getHis(string $item){
             return $this->$item;
         }
@@ -288,14 +289,19 @@
 
         public function getFollowersLogins(){
             $stmt = self::$db->prepare(
-                'SELECT u.id, u.login 
+                'SELECT u.login as `login`,  u.online as `online` 
                 FROM users u
                 INNER JOIN follows f 
                 ON f.id_following = u.id 
                 WHERE f.id_followed = ?'
             );
             $stmt->execute([$this->id]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $followers = [];
+            foreach($results as $key => $value){
+                $followers[$value['login']] = $value['online'];
+            }
+            return $followers;
         }
 
         public function getFollowings(int $id = NULL){
@@ -310,14 +316,25 @@
 
         public function getFollowingsLogins(){
             $stmt = self::$db->prepare(
-                'SELECT u.id, u.login 
+                'SELECT u.login as `login`, u.online as `online` 
                 FROM users u
                 INNER JOIN follows f 
                 ON f.id_followed = u.id 
                 WHERE f.id_following = ?'
             );
             $stmt->execute([$this->id]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $followings = [];
+            foreach($results as $key => $value){
+                $followings[$value['login']] = $value['online'];
+            }
+            return $followings;
+        }
+
+        public function getFriends(){
+            $followers = self::getFollowersLogins();
+            $followings = self::getFollowingsLogins();
+            return array_intersect($followers, $followings);
         }
 
         public function getConversations(int $range){

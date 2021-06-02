@@ -1,14 +1,16 @@
-// var jsdom = require("jsdom");
-// const { JSDOM } = jsdom;
-// const { window } = new JSDOM();
-// const { document } = (new JSDOM('')).window;
-// global.document = document;
-
-// var $ = jQuery = require('jquery')(window);
-
+const mysql = require('mysql')
 const express = require('express')
 const app = express()
 const http = require('http')
+
+const options = {
+    host    : 'localhost',
+    user    : 'root',
+    password: '',
+    database: 'socialnetwork'
+}
+const database = mysql.createConnection(options)
+
 const server = http.createServer(app)
 users = {}
 prevent = false
@@ -37,6 +39,16 @@ io.on('connection', (socket)=>{
             }
         }
         users[socket.id] = data
+        database.query(
+            `UPDATE users
+            SET online = 1 
+            WHERE login = ?`,
+            [users[socket.id].login],
+            (e, results)=>{
+                // console.log(e)
+                // console.log(results)
+            }
+        )
         pers !== 'connected' ? console.log(users[socket.id].login + ' connected') : null
         pers = ''
     })
@@ -45,6 +57,16 @@ io.on('connection', (socket)=>{
         discUser = setTimeout(() => {
             if(socket.id in users){
                 console.log(users[socket.id].login + ' disconnected')
+                database.query(
+                    `UPDATE users
+                    SET online = 0 
+                    WHERE login = ?`,
+                    [users[socket.id].login],
+                    (e, results)=>{
+                        // console.log(e)
+                        // console.log(results)
+                    }
+                )
                 delete users[socket.id]
             }
         }, 3000)

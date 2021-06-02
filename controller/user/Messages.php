@@ -18,6 +18,7 @@ class Messages extends View{
         else{
             if(!isset($_GET['conversation']) || $_GET['conversation']==NULL){
                 $conversations = $user->getConversations(0);
+                $friends = $user->getFriends();
                 $_SESSION['messages_limit'] = 10;
                 include VIEW . 'user/messages.php';
             }

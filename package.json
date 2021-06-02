@@ -4,6 +4,7 @@
     "jquery": "^3.6.0",
     "js-cookie": "^2.2.1",
     "jsdom": "^16.6.0",
+    "mysql": "^2.18.1",
     "path-to-regexp": "^0.1.7",
     "socket.io": "^4.1.1"
   }
