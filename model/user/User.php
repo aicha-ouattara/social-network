@@ -286,6 +286,18 @@
             $this->followers = $result['followers'];
         }
 
+        public function getFollowersLogins(){
+            $stmt = self::$db->prepare(
+                'SELECT u.id, u.login 
+                FROM users u
+                INNER JOIN follows f 
+                ON f.id_following = u.id 
+                WHERE f.id_followed = ?'
+            );
+            $stmt->execute([$this->id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public function getFollowings(int $id = NULL){
             $stmt = self::$db->prepare(
                 "SELECT COUNT('id_followers') as `followings` FROM `follows` 
@@ -294,6 +306,18 @@
             $id!== NULL ? $stmt->execute([$id]) : $stmt->execute([$this->id]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->followings = $result['followings'];
+        }
+
+        public function getFollowingsLogins(){
+            $stmt = self::$db->prepare(
+                'SELECT u.id, u.login 
+                FROM users u
+                INNER JOIN follows f 
+                ON f.id_followed = u.id 
+                WHERE f.id_following = ?'
+            );
+            $stmt->execute([$this->id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function getConversations(int $range){

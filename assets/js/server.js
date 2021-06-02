@@ -24,8 +24,8 @@ const io = require("socket.io")(server, {
 io.on('connection', (socket)=>{
     // User authentified
     socket.on('data', (data)=>{
-        // convert data to object {authtoken, id, login}
-        // pers used just to show $user connected & $user disconnected  
+        // Convert data to object {authtoken, id, login}
+        // $pers used just to show $user connected & $user disconnected  
         var pers = ''
         data = JSON.parse(data)
         for(var id in users){

@@ -25,6 +25,7 @@ class Profile extends View{
                         include VIEW . 'error.php';
                         break;
                     case 'user_found':
+                        $this->jsList[] = 'follow.js';
                         include VIEW . 'user/visit_profile.php';
                         break;
                     default:
