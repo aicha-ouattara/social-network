@@ -15,6 +15,10 @@ $(function(){
             // typeof Cookies.get('socketid') == 'undefined' ? Cookies.set('socketid', socket.id, { expires: 7, path: '/', secure: true, sameSite: 'strict' }) : null
             // socket.id = Cookies.get('socketid')
         })
+
+        socket.on('friend_pop', ()=>{
+            $("#friends_list").load(location.href + ' #friends_list')
+        })
         
         socket.on('newmsg', function(message){
             $('#section_messages').load(location.href + ' #section_messages')
