@@ -237,9 +237,18 @@
             $stmt = self::$db->prepare(
                 'SELECT `login` FROM `users` WHERE `id` = ?'
             );
-            $stmt->execute([$this->id]);
+            $stmt->execute([intval($this->id)]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             $result !== false ? $this->login = $result['login'] : $this->login = 'Utilisateur supprimé';
+        }
+
+        public function isOnline(){
+            $stmt = self::$db->prepare(
+                'SELECT `online` FROM `users` WHERE `id` = ?'
+            );
+            $stmt->execute([intval($this->id)]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->online = $result['online'];
         }
 
         public function getSettings(){

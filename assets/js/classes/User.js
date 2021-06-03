@@ -42,7 +42,7 @@ class User extends Database{
             FROM follows f
             INNER JOIN users u 
             ON f.id_following = u.id
-            WHERE f.id_following = ? AND u.online = 1`,
+            WHERE f.id_following = ?`,
             [this.id],
             (error, rows)=>{
                 if(error) throw error.message
@@ -54,7 +54,7 @@ class User extends Database{
                     FROM follows f
                     INNER JOIN users u 
                     ON f.id_followed = u.id
-                    WHERE f.id_followed = ? AND u.online = 1`,
+                    WHERE f.id_followed = ?`,
                     [this.id],
                     (error, rows)=>{
                         if(error) throw error.message

@@ -65,12 +65,17 @@ io.on('connection', (socket)=>{
             // Verify that there is an actual user to disconnect
             if(socket.id in users){
                 console.log(users[socket.id].login + ' disconnected')
-                // Loop through users to send the disconnection to user's friends
-                for(let socketid in users){
-                    if(friends.includes(parseInt(users[socketid].id))) io.to(socketid).emit('friend_pop')
-                }
+                // Declare user
+                user = new User(users[socket.id].id, users[socket.id].login, users[socket.id].authtoken)
                 // Disconnect the user
                 user.disconnect()
+                // Fetch friends
+                user.getFriends(function(result){
+                    friends = result
+                    for(let socketid in users){
+                        if(friends.includes(parseInt(users[socketid].id))) io.to(socketid).emit('friend_pop')
+                    }
+                })
                 // Delete the user from the users array
                 delete users[socket.id]
             }
@@ -80,9 +85,9 @@ io.on('connection', (socket)=>{
     socket.on('message', (message)=>{
         // Emit the message to concerned user
         for(let socketid in users){
-            if(users[socketid].id == message.to) io.emit('newmsg', message.content)
+            if(users[socketid].id == message.to) io.to(socketid).emit('newmsg', message)
         }
-        io.to(socket).emit('newmsg', message.content)
+        io.to(socket).emit('newmsg', message)
     })
 })
 

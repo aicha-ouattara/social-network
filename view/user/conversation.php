@@ -9,9 +9,13 @@
 
     // Define partner
     $id_partner = $user->getHis('id') == $messages[0]['id_receiver'] ? $messages[0]['id_sender'] : $messages[0]['id_receiver'];
+    $partner = new User(['id' => $id_partner]);
+    $partner->getLoginById();
+    $partner->isOnline();
 ?>
 
 <section id="section_messages">
+    <h4 id="friend_conversation"><?=$partner->getHis('login');?> - <span class="friend_status"><?= $partner->getHis('online') ? 'Connecté' : 'Déconnecté';?></span></h4>
     <?php if($messages['total'] > $_SESSION['messages_limit']){?>
         <button id="more_messages">Afficher les messages plus anciens</button>
     <?php } 
