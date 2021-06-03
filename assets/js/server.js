@@ -1,8 +1,8 @@
 const Database = require('./classes/Database.js')
 const User = require('./classes/User.js')
 
-link = new Database()
-database = link.database
+const link = new Database()
+const database = link.database
 
 const express = require('express')
 const app = express()
@@ -20,7 +20,6 @@ const io = require("socket.io")(server, {
 users = {}
 user = {}
 friends = []
-prevent = false
 
 // User connected
 io.on('connection', (socket)=>{
@@ -30,14 +29,16 @@ io.on('connection', (socket)=>{
         data = JSON.parse(data)
         // $pers used just to show $user connected & $user disconnected  
         var pers = ''
-        for(let id in users){
-            if(users[id].login === data.login){
+        // Loop through users & delete previous entry if it exists
+        for(let socketid in users){
+            if(users[socketid].login === data.login){
                 typeof discUser !== 'undefined' ? clearTimeout(discUser) : null
                 pers = 'connected'
-                delete users[id]
+                delete users[socketid]
                 break
             }
         }
+        // Insert {id, login, authtoken} into users array
         users[socket.id] = data
         // Create user on server' side
         user = new User(data.id, data.login, data.authtoken)
@@ -56,20 +57,32 @@ io.on('connection', (socket)=>{
     })
     // User disconnected
     socket.on('disconnect', ()=>{
+        /**
+         * Each refresh is considered as a disconnect/connect
+         * Hence a timeout with a cleartimeout at the connect event will prevent this from happening
+         */
         discUser = setTimeout(() => {
+            // Verify that there is an actual user to disconnect
             if(socket.id in users){
                 console.log(users[socket.id].login + ' disconnected')
+                // Loop through users to send the disconnection to user's friends
                 for(let socketid in users){
                     if(friends.includes(parseInt(users[socketid].id))) io.to(socketid).emit('friend_pop')
                 }
+                // Disconnect the user
                 user.disconnect()
+                // Delete the user from the users array
                 delete users[socket.id]
             }
         }, 3000)
     })
     // Receiving message
     socket.on('message', (message)=>{
-        io.emit('newmsg', message)
+        // Emit the message to concerned user
+        for(let socketid in users){
+            if(users[socketid].id == message.to) io.emit('newmsg', message.content)
+        }
+        io.to(socket).emit('newmsg', message.content)
     })
 })
 
