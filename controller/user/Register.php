@@ -47,6 +47,9 @@ class Register extends View{
 				case 'allgood':
 					switch($user->subscribe()){
 						case 'success':
+							$mail_address = $user->getHis('mail');
+							$message = 'register';
+							include ROOT . 'mailer/mailer.php';
 							$register_return = "L'inscription a bien été enregistrée. Un e-mail de confirmation va vous être envoyé.<br><a href='" . URL . "'>Accueil</a>";
 							break;
 						case 'user_exists':

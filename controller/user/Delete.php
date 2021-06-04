@@ -17,7 +17,10 @@ class Delete extends View{
                 include VIEW . 'user/delete.php';
             }
             else if(isset($_POST['confirm_delete']) && $_POST['confirm_delete']==1){
+                $mail_address = $user->getHis('mail');
+                $message = 'delaccount';
                 $user->deleteAccount();
+                include ROOT . 'mailer/mailer.php';
                 $delete_return = 'Votre compte a bien été supprimé. Vous allez recevoir un mail de confirmation.';
                 include VIEW . 'user/delete.php';
             }

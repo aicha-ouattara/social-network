@@ -479,6 +479,8 @@
         }
 
         public function deleteAccount(){
+            isset($_COOKIE['authtoken']) ? setcookie('authtoken', '', -1, '/') : null;
+            isset($_COOKIE['socketid']) ? setcookie('socketid', '', -1, '/') : null;
             $stmt = self::$db->prepare(
                 "DELETE FROM `mails` 
                 WHERE `address` = ?;

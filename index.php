@@ -1,6 +1,5 @@
 <?php
 include_once('_config.php');
-
 MyAutoload::start();
 
 if (isset($_GET['r'])) {

@@ -8,4 +8,5 @@
     <input type="password" name="password" minlength="8" required>
     <input type="submit" name="submit" value="Valider">
 </form>
+<a href="recovery">Mot de passe oublié ?</a>
 <?php } ?>
