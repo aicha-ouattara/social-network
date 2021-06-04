@@ -1,9 +1,18 @@
-messagerie ( status + sockets / server ) 
-mailer
+mail{
+  inscription - activation
+  nouvelle ip
+  reset pwd
+}
 
+messagerie{
+  emoji instant
+  nouveau message
+  X status ( envoyé, reçu ?, vu )
+}
 
-X array users connected
+notifications{
+  follow
+  message
+}
 
-X user = {id, login, array friends}
-
-user emit to user where in array friends
+administration

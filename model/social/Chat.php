@@ -1,10 +1,32 @@
 <?php
 
     class Chat extends User{
+        protected $id_user = null;
+        protected $conversation = null;
 
-        public function __construct(int $conversation){
+        public function __construct(int $conversation = null){
             Database::__construct();
             $this->conversation = $conversation;
+        }
+
+        public function getHis(string $item){
+            return $this->$item;
+        }
+
+        public function exists(int $id_userA, int $id_userB){
+            $stmt = self::$db->prepare(
+                'SELECT `conversation` 
+                FROM `messages` 
+                WHERE ( `id_receiver` = :id_userA AND `id_sender` = :id_userB ) 
+                OR (`id_receiver` = :id_userB AND `id_sender` = :id_userA )'
+            );
+            $stmt->execute([':id_userA' => $id_userA, ':id_userB' => $id_userB]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($result){
+                $this->conversation = $result['conversation'];
+                return true;
+            }
+            else return false;
         }
 
         public function verifyAccess(int $id){
@@ -15,7 +37,10 @@
             $stmt->execute([$id, $this->conversation]);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if($result === false) return 0;
-            else return 1;
+            else{
+                $this->id_user = $id;
+                return 1;
+            }
         }
 
         public function getMessages(int $limit){
@@ -47,6 +72,16 @@
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $results = array_reverse($results);
             $results['total'] = $total['counter'];
+            self::seen();
             return $results;
+        }
+
+        private function seen(){
+            $stmt = self::$db->prepare(
+                "UPDATE messages m 
+                SET m.status = 'Vu' 
+                WHERE m.conversation = ? AND m.id_receiver = ?"
+            );
+            $stmt->execute([$this->conversation, $this->id_user]);
         }
     }

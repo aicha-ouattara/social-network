@@ -4,11 +4,11 @@
     require 'Chat.php';
 
     class Message extends Chat{
-        private $id = null;
-        private $id_conversation = null;
-        private $id_user = null;
-        private $id_partner = null;
-        private $message = null;
+        protected $id = null;
+        protected $id_conversation = null;
+        protected $id_user = null;
+        protected $id_partner = null;
+        protected $message = null;
 
         public function __construct(int $id_message = NULL, int $id_conversation = NULL, int $id_user = NULL, int $id_partner = NULL, string $message = NULL){
             parent::__construct($id_conversation);

@@ -37,7 +37,7 @@ $(function(){
     /**
      * Messages handling
      */
-    $('#messager').on('submit', function(e){
+    $(document).on('submit', '#messager', function(e){
         e.preventDefault()
         // Create message object {content, from, to, conversation}
         var message = {}
@@ -50,7 +50,8 @@ $(function(){
             $.post(
                 'model/social/Message.php', 
                 {user, partner, message:message.content, conversation}, 
-                ()=>{
+                (data)=>{
+                    // console.log(data)
                     $('#section_messages').load(location.href + ' #section_messages')
             })
             // Clear input and set focus
