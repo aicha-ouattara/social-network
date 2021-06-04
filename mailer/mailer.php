@@ -16,7 +16,9 @@ if(isset($message) && $message){
     switch($message){
         case 'register':
             $title = 'Votre inscription sur OKKO';
-            $content = 'Activez votre compte.';
+            $content = file_get_contents(ROOT . 'mailer/mails/register.html');
+            $content = str_replace('$link', $link, $content);
+            $content = str_replace('$login', $login, $content);
             break;
         case 'delaccount':
             $title = 'Désolés de vous voir partir';
@@ -28,6 +30,10 @@ if(isset($message) && $message){
             break;
     }
 }else die("Vous ne pouvez pas accéder à cette page.");
+
+/**
+ * Enable PoP & less-secure apps
+ */
 
 //Enable SMTP debugging. 
 // $mail->SMTPDebug = 3;                               

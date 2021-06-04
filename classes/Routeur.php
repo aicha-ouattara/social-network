@@ -26,7 +26,8 @@ class Routeur
 		"reaction"			=> 'PostReactionManager',
 		"followers"			=> 'Followers',
 		"followings"		=> 'Followings',
-		"recovery"			=> 'Recovery'
+		"recovery"			=> 'Recovery',
+		"confirm_register"	=> 'ConfirmRegister'
 	];
 	private $controller;	// Controleur sélectionné
 

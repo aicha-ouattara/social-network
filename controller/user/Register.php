@@ -49,6 +49,12 @@ class Register extends View{
 						case 'success':
 							$mail_address = $user->getHis('mail');
 							$message = 'register';
+							$login = $user->getHis('login');
+							/**
+							 * Add crypt ivs etc to db
+							 */
+							$crypttime=urlencode(openssl_encrypt(time(), $cipher, $key2, OPENSSL_ZERO_PADDING, $iv));
+							$link = URL . 'confirm_register&u=' . $user->getHis('id') . '&a=1&t=' . urlencode(md5(time()));
 							include ROOT . 'mailer/mailer.php';
 							$register_return = "L'inscription a bien été enregistrée. Un e-mail de confirmation va vous être envoyé.<br><a href='" . URL . "'>Accueil</a>";
 							break;
