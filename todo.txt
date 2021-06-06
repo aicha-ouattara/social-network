@@ -5,7 +5,7 @@ mail{
 }
 
 messagerie{
-  emoji instant
+  X emoji instant
   nouveau message
   X status ( envoyé, reçu ?, vu )
 }

@@ -43,7 +43,7 @@ class Messages extends View{
         }
         // If the user is sending a message for a new conversation
         else if(isset($_POST['new_conversation']) && $_POST['new_conversation'] == 1 && isset($_POST['message']) && $_POST['message']){
-            echo $_POST['message'];
+            var_dump($_POST);
         }
         else{
             // If the user isn't asking for a specific conversation, load all conversations

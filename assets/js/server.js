@@ -48,12 +48,22 @@ io.on('connection', (socket)=>{
         user.getFriends(function(result){
             friends = result
             for(let socketid in users){
-                if(friends.includes(parseInt(users[socketid].id))) io.to(socketid).emit('friend_pop')
+                if(friends.includes(parseInt(users[socketid].id))){
+                    io.to(socketid).emit('friend_pop')
+                }
             }
         })
 
         pers !== 'connected' ? console.log(users[socket.id].login + ' connected') : null
         pers = ''
+    })
+    // User sent an emoji
+    socket.on('emoji', (data)=>{
+        for(let socketid in users){
+            if(data.partner == users[socketid].id){
+                io.to(socketid).emit('emoji', data.message)
+            }
+        }
     })
     // User disconnected
     socket.on('disconnect', ()=>{
@@ -65,7 +75,7 @@ io.on('connection', (socket)=>{
             // Verify that there is an actual user to disconnect
             if(socket.id in users){
                 console.log(users[socket.id].login + ' disconnected')
-                // Declare user
+                // Redeclare user to avoid confusion
                 user = new User(users[socket.id].id, users[socket.id].login, users[socket.id].authtoken)
                 // Disconnect the user
                 user.disconnect()
@@ -73,7 +83,9 @@ io.on('connection', (socket)=>{
                 user.getFriends(function(result){
                     friends = result
                     for(let socketid in users){
-                        if(friends.includes(parseInt(users[socketid].id))) io.to(socketid).emit('friend_pop')
+                        if(friends.includes(parseInt(users[socketid].id))){
+                            io.to(socketid).emit('friend_pop')
+                        }
                     }
                 })
                 // Delete the user from the users array
@@ -85,7 +97,9 @@ io.on('connection', (socket)=>{
     socket.on('message', (message)=>{
         // Emit the message to concerned user
         for(let socketid in users){
-            if(users[socketid].id == message.to) io.to(socketid).emit('newmsg', message)
+            if(users[socketid].id == message.to){
+                io.to(socketid).emit('newmsg', message)
+            }
         }
         io.to(socket).emit('newmsg', message)
     })

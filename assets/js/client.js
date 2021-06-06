@@ -1,7 +1,4 @@
 $(function(){
-    /**
-     * Connection handling
-     */
     // If the user is authenticated
     if(document.cookie.indexOf('authtoken') > -1 ){
         // Create socket
@@ -19,16 +16,21 @@ $(function(){
 
         // When a friend connects or disconnects
         socket.on('friend_pop', ()=>{
-            $("#friends_list").load(location.href + ' #friends_list')
-            $("#friend_conversation").load(location.href + ' #friend_conversation')
+            $("#friends_list").load(' #friends_list > *')
+            $(".friend_status").load(' .friend_status')
         })
         
         // When a new message has been received
         socket.on('newmsg', (message)=>{
             // Refresh actual message window
-            $('#section_messages').load(location.href + ' #section_messages')
+            $('#section_messages').load(' #section_messages > *', appendEmojisMenu)
             // Refresh conversation resume
             $('a[href="messages&conversation=' + message.conversation + '"]').load(location.href + ' a[href="messages&conversation=' + message.conversation + '"]')
+        })
+
+        // Refresh div when an emoji has been sent to a message
+        socket.on('emoji', (message)=>{
+            $('#' + message).load(' #' + message)
         })
     }
     // Delete socket if authtoken cookie isn't valid
@@ -52,7 +54,7 @@ $(function(){
                 {user, partner, message:message.content, conversation}, 
                 (data)=>{
                     // console.log(data)
-                    $('#section_messages').load(location.href + ' #section_messages')
+                    $('#section_messages').load(' #section_messages > *', appendEmojisMenu)
             })
             // Clear input and set focus
             $('#input_m').val('').trigger('click')
