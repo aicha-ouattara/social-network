@@ -24,6 +24,7 @@ $(function(){
         socket.on('newmsg', (message)=>{
             // Refresh actual message window
             $('#section_messages').load(' #section_messages > *', appendEmojisMenu)
+            console.log('newmsg')
             // Refresh conversation resume
             $('a[href="messages&conversation=' + message.conversation + '"]').load(location.href + ' a[href="messages&conversation=' + message.conversation + '"]')
         })
@@ -57,7 +58,7 @@ $(function(){
                     $('#section_messages').load(' #section_messages > *', appendEmojisMenu)
             })
             // Clear input and set focus
-            $('#input_m').val('').trigger('click')
+            $('#input_m').val('').trigger('focus')
             // Emit message to the server
             socket.emit('message', message)
         }

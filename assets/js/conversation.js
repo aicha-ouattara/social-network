@@ -49,9 +49,10 @@ function sendEmoji(message, emoji, div){
     $.post(
         'model/social/Message.php', 
         {emoji, message, user, conversation}, 
-        function(data){
+        ()=>{
             $("#" + div).load(location.href + " #" + div)
-    })
+        }
+    )
     let data = {partner, message}
     socket.emit('emoji', data)
 }
@@ -63,6 +64,7 @@ function deleteMessage(id){
         {delete:1, id, user, conversation}, 
         function(data){
             $('#section_messages').load(' #section_messages > *', appendEmojisMenu)
+            if(data !== 'alive') window.location.replace("/social-network/messages");
         }
     )
 }

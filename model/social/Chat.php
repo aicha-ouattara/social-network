@@ -84,4 +84,27 @@
             );
             $stmt->execute([$this->conversation, $this->id_user]);
         }
+
+        public function newConversation(int $id_sender, int $id_receiver, string $message){
+            $message = htmlspecialchars($message);
+            $this->id_user = $id_sender;
+            $stmt = self::$db->prepare(
+                "INSERT INTO `messages` (`conversation`, `id_sender`, `id_receiver`, `content`, `date`, `emoji`, `status`) 
+                SELECT MAX(`conversation`) + 1, ?, ?, ?, NOW(), 0, 'Envoyé' FROM `messages`"
+            );
+            $stmt->execute([$id_sender, $id_receiver, $message]);
+            // self::getInsert();
+        }
+
+        private function getInsert(){
+            $stmt = self::$db->prepare(
+                "SELECT `conversation`
+                FROM `messages` 
+                WHERE `id_sender` = ? AND `id_receiver` = ?"
+            );
+            $stmt->execute([$this->id_sender, $this->id_receiver]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->conversation = $result['conversation'];
+            return $this->conversation;
+        }
     }

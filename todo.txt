@@ -6,8 +6,10 @@ mail{
 
 messagerie{
   X emoji instant
-  nouveau message
+  X nouveau message
   X status ( envoyé, reçu ?, vu )
+  --> Instant vu / envoyé
+  appendemoji not defined on conversations
 }
 
 notifications{

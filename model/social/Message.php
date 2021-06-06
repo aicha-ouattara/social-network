@@ -60,13 +60,24 @@
             $stmt->execute([$this->id]);
         }
 
+        public function stillExists(){
+            $stmt = self::$db->prepare(
+                'SELECT `id` 
+                FROM `messages` 
+                WHERE `conversation` = ?'
+            );
+            $stmt->execute([$this->id_conversation]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($result) return true;
+            else return false;
+        }
+
         public function send(){
             $stmt = self::$db->prepare(
                 "INSERT INTO `messages` (`conversation`, `id_sender`, `id_receiver`, `content`, `date`, `status`) 
                 VALUES ( ? , ? , ? , ? , NOW(), 'Envoyé')"
             );
-            // Fetch receiver
-            $stmt->execute([$this->id_conversation, $this->id_user, $this->id_partner, $this->message]);
+            $stmt->execute([$this->id_conversation, $this->id_user, $this->id_partner, htmlspecialchars($this->message)]);
         }
     }
 
@@ -79,6 +90,7 @@
     else if(isset($_POST['delete']) && $_POST['delete'] == 1 && isset($_POST['id']) && $_POST['id'] && isset($_POST['user']) && $_POST['user']){
         $message = new Message(intval($_POST['id']), intval($_POST['conversation']), intval($_POST['user']));
         if($message->verifySender()) $message->deleteSelf();
+        echo $message->stillExists() ? 'alive' : 'deleted';
     }
 
     else if(isset($_POST['message']) && $_POST['message'] && isset($_POST['user']) && $_POST['user'] && isset($_POST['partner']) && $_POST['partner']){

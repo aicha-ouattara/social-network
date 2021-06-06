@@ -43,7 +43,27 @@ class Messages extends View{
         }
         // If the user is sending a message for a new conversation
         else if(isset($_POST['new_conversation']) && $_POST['new_conversation'] == 1 && isset($_POST['message']) && $_POST['message']){
-            var_dump($_POST);
+            $partner = new User(['id' => intval($_POST['partner'])]);
+            $partner->getLoginById();
+            if(array_key_exists($partner->getHis('login'), $user->getFriends())){
+                $conversation = new Chat();
+                $conversation->newConversation(intval($user->getHis('id')), intval($partner->getHis('id')), $_POST['message']);
+                if($conversation->exists(intval($user->getHis('id')), intval($partner->getHis('id')))){
+                    $url = 'messages&conversation=' . $conversation->getHis('conversation');
+                    header("Location: $url");
+                    exit();
+                }
+                else{
+                    $error = ['origin' => 'new_conversation', 'message' => 'Une erreur est survenue lors de l\'envoi du message. Si le problème persiste,
+                    veuillez contacter le support à support@okko.com'];
+                    include VIEW. 'error.php';
+                }
+            }
+            // If the user has no access to the receiver
+            else{
+                $error = ['origin' => 'new_conversation', 'message' => 'Vous ne pouvez pas communiquer avec cet utilisateur.'];
+                include VIEW . 'error.php';
+            }
         }
         else{
             // If the user isn't asking for a specific conversation, load all conversations
